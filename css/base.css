@@ -5,13 +5,18 @@
 /* ── Smooth scroll + CSS near-snap (industry standard) ─────── */
 html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
 }
 
-main section,
-footer {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
+@media (min-width: 768px) {
+    html {
+        scroll-snap-type: y proximity;
+    }
+    
+    main section,
+    footer {
+        scroll-snap-align: start;
+        scroll-snap-stop: normal;
+    }
 }
 
 
