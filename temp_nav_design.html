@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Salesforce Developer Portfolio Nav</title>
+<!-- Google Fonts: Space Grotesk -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#6c2bee', // Custom color from theme
+              dark: '#0a0a0f',
+              navy: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+          },
+          borderRadius: {
+            'full': '9999px',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="glassmorphism-and-grain">
+    :root {
+      --brand-glow: rgba(108, 43, 238, 0.3);
+    }
+
+    body {
+      background-color: #050508;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grain overlay */
+    .grain-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .glass-nav {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Liquid Glass Button Effect */
+    .liquid-glass-btn {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #6c2bee 0%, #2dd4bf 100%);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 0 20px var(--brand-glow);
+    }
+
+    .liquid-glass-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      transition: all 0.6s ease;
+      transform: translate(-100%, -100%);
+    }
+
+    .liquid-glass-btn:hover::before {
+      transform: translate(0, 0);
+    }
+
+    .liquid-glass-btn:hover {
+      box-shadow: 0 0 30px rgba(45, 212, 191, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Link Hover State */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: #6c2bee;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px #6c2bee;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+  </style>
+<style data-purpose="eyeball-styles">
+    .eye-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .eye {
+      width: 44px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 0 15px rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .pupil {
+      width: 18px;
+      height: 18px;
+      background: #0f172a;
+      border-radius: 50%;
+      position: absolute;
+      transition: transform 0.05s linear;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Small glint on the pupil */
+    .pupil::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 4px;
+      height: 4px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body class="text-slate-200">
+<div class="grain-overlay"></div>
+<!-- BEGIN: Navigation -->
+<nav class="fixed top-0 left-0 w-full z-50 glass-nav" data-purpose="main-navigation">
+<div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+<!-- BEGIN: Branding & Logo -->
+<div class="flex items-center gap-4" data-purpose="branding">
+<div class="text-3xl font-bold tracking-tighter text-white flex items-center gap-2">
+<span class="bg-gradient-to-br from-brand to-teal-400 bg-clip-text text-transparent">TSPN</span>
+<span class="w-1 h-8 bg-slate-700 rounded-full mx-2 hidden md:block"></span>
+</div>
+</div>
+<!-- END: Branding & Logo -->
+<!-- BEGIN: Interactive Eyeballs -->
+<!-- Centered for visual impact on large screens -->
+<div class="hidden lg:flex flex-1 justify-center" data-purpose="eye-tracking-interaction">
+<div class="eye-container">
+<div class="eye" id="eye-left">
+<div class="pupil"></div>
+</div>
+<div class="eye" id="eye-right">
+<div class="pupil"></div>
+</div>
+</div>
+</div>
+<!-- END: Interactive Eyeballs -->
+<!-- BEGIN: Nav Links -->
+<div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide uppercase" data-purpose="nav-links">
+<a class="nav-link hover:text-white transition-colors" href="#">Home</a>
+<a class="nav-link hover:text-white transition-colors" href="#">Experience</a>
+<a class="nav-link hover:text-white transition-colors" href="#">Skills</a>
+<a class="nav-link hover:text-white transition-colors" href="#">Projects</a>
+<a class="nav-link hover:text-white transition-colors" href="#">Contact</a>
+</div>
+<!-- END: Nav Links -->
+<!-- BEGIN: CTA -->
+<div class="ml-8" data-purpose="action-buttons">
+<button class="liquid-glass-btn px-6 py-2.5 rounded-full text-white font-semibold text-sm tracking-wide shadow-lg border border-white/20">
+          Download CV
+        </button>
+</div>
+<!-- END: CTA -->
+</div>
+</nav>
+<!-- END: Navigation -->
+<!-- BEGIN: Hero Content (Preview Context) -->
+<main class="pt-48 px-6 max-w-7xl mx-auto min-h-screen">
+<section class="max-w-3xl">
+<h2 class="text-brand font-medium mb-4 tracking-widest uppercase text-sm">Salesforce Developer &amp; Architect</h2>
+<h1 class="text-6xl md:text-8xl font-bold text-white leading-tight mb-8">
+        Engineering <br/>
+<span class="text-slate-500">Cloud Excellence.</span>
+</h1>
+<p class="text-xl text-slate-400 max-w-xl leading-relaxed">
+        Building scalable CRM solutions that drive business transformation. Specialized in Apex, LWC, and complex integrations.
+      </p>
+<div class="mt-12 flex items-center gap-4 text-slate-500 text-sm italic">
+<span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Available for new projects in 2026
+      </div>
+</section>
+<!-- Decorative Glows -->
+<div class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-brand/20 blur-[120px] rounded-full -z-10"></div>
+<div class="fixed bottom-[10%] left-[-5%] w-[400px] h-[400px] bg-teal-500/10 blur-[100px] rounded-full -z-10"></div>
+</main>
+<!-- END: Hero Content -->
+<script data-purpose="eye-tracking-logic">
+    /**
+     * Eye Tracking Script
+     * Logic: Calculates the angle between the center of each eye and the mouse cursor,
+     * then offsets the pupil along that vector.
+     */
+    document.addEventListener('mousemove', (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      const eyes = document.querySelectorAll('.eye');
+      
+      eyes.forEach(eye => {
+        const pupil = eye.querySelector('.pupil');
+        const rect = eye.getBoundingClientRect();
+        
+        // Find the center of the eye
+        const eyeX = rect.left + rect.width / 2;
+        const eyeY = rect.top + rect.height / 2;
+
+        // Calculate angle between eye center and mouse
+        const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
+        
+        // Define distance pupil can travel (radius of eye - radius of pupil - small padding)
+        const distance = 10; 
+        
+        const moveX = Math.cos(angle) * distance;
+        const moveY = Math.sin(angle) * distance;
+        
+        // Update pupil position
+        pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      });
+    });
+  </script>
+<script data-purpose="mobile-nav-dummy">
+    // Placeholder for mobile toggle if needed in production
+    console.log("TSPN Portfolio Nav Initialized");
+  </script>
+</body></html>

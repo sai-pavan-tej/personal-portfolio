@@ -1,0 +1,245 @@
+/* ============================================================
+   base.css — Global tokens, utilities & shared components
+   Portfolio: Teja Sai Pavan Nakka  |  TSPN.dev
+   ============================================================ */
+/* ── Smooth scroll + CSS near-snap (industry standard) ─────── */
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+}
+
+main section,
+footer {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+}
+
+
+/* ── Active navbar link highlight ────────────────────────── */
+nav a.nav-active {
+    color: #a855f7;
+    position: relative;
+}
+
+/* ── Hide scrollbar for horizontally sliding carousels ────── */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+nav a.nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #a855f7;
+}
+
+/* ── Glass morphism ───────────────────────────────────────── */
+
+.glass {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+.glass-premium {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ── Grain overlay (subtle noise texture) ─────────────────── */
+.grain {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ── Background gradient helper ──────────────────────────── */
+.hero-gradient {
+    background: radial-gradient(circle at 20% 30%, rgba(108, 43, 238, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(147, 51, 234, 0.15) 0%, transparent 40%);
+}
+
+/* ── Kinetic gradient text (used on "Salesforce" word) ────── */
+.text-kinetic {
+    background: linear-gradient(to right, #6c2bee, #a855f7, #6c2bee);
+    background-size: 200% auto;
+    animation: shine 8s linear infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Prevents italic slant from being hard-clipped by parent overflow */
+    padding-right: 0.1em;
+    margin-right: -0.1em;
+}
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+/* ── Decorative section underline ────────────────────────── */
+.organic-underline {
+    position: relative;
+}
+.organic-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.3;
+    border-radius: 2px;
+}
+
+/* ── Professional Journey — micro-animations ─────────────────────── */
+
+/* 1. Before-visible state */
+[data-journey-entry] .jrn-card {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1),
+              transform 0.55s cubic-bezier(0.34,1.4,0.64,1);
+}
+[data-journey-entry] .jrn-node {
+  opacity: 0;
+  transform: translateX(-20px) scale(0.85);
+  transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1),
+              transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* 2. Visible state */
+[data-journey-entry].jrn-visible .jrn-card {
+  opacity: 1;
+  transform: translateX(0);
+}
+[data-journey-entry].jrn-visible .jrn-node {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* 3. Stagger per entry */
+[data-journey-entry]:nth-child(1) .jrn-card { transition-delay: 0.05s; }
+[data-journey-entry]:nth-child(1) .jrn-node { transition-delay: 0s;    }
+[data-journey-entry]:nth-child(2) .jrn-card { transition-delay: 0.18s; }
+[data-journey-entry]:nth-child(2) .jrn-node { transition-delay: 0.10s; }
+[data-journey-entry]:nth-child(3) .jrn-card { transition-delay: 0.28s; }
+[data-journey-entry]:nth-child(3) .jrn-node { transition-delay: 0.18s; }
+[data-journey-entry]:nth-child(4) .jrn-card { transition-delay: 0.38s; }
+[data-journey-entry]:nth-child(4) .jrn-node { transition-delay: 0.26s; }
+
+/* 4. Card hover glow */
+[data-journey-card] {
+  transition: transform 0.12s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+[data-journey-card]:hover {
+  box-shadow: 0 12px 40px -8px rgba(108,43,238,0.25),
+              0 0 0 1px rgba(108,43,238,0.18);
+}
+
+/* 5. Chip pop-in */
+[data-journey-entry] .jrn-chip {
+  opacity: 0;
+  transform: scale(0.85) translateY(4px);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
+}
+[data-journey-entry].jrn-visible .jrn-chip {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+[data-journey-entry]:nth-child(1) .jrn-chip:nth-child(1) { transition-delay: 0.30s; }
+[data-journey-entry]:nth-child(1) .jrn-chip:nth-child(2) { transition-delay: 0.36s; }
+[data-journey-entry]:nth-child(1) .jrn-chip:nth-child(3) { transition-delay: 0.42s; }
+[data-journey-entry]:nth-child(2) .jrn-chip:nth-child(1) { transition-delay: 0.42s; }
+[data-journey-entry]:nth-child(2) .jrn-chip:nth-child(2) { transition-delay: 0.48s; }
+[data-journey-entry]:nth-child(2) .jrn-chip:nth-child(3) { transition-delay: 0.54s; }
+[data-journey-entry]:nth-child(3) .jrn-chip:nth-child(1) { transition-delay: 0.52s; }
+[data-journey-entry]:nth-child(3) .jrn-chip:nth-child(2) { transition-delay: 0.58s; }
+[data-journey-entry]:nth-child(3) .jrn-chip:nth-child(3) { transition-delay: 0.64s; }
+[data-journey-entry]:nth-child(4) .jrn-chip:nth-child(1) { transition-delay: 0.62s; }
+[data-journey-entry]:nth-child(4) .jrn-chip:nth-child(2) { transition-delay: 0.68s; }
+[data-journey-entry]:nth-child(4) .jrn-chip:nth-child(3) { transition-delay: 0.74s; }
+
+/* 6. Active node pulse ring */
+@keyframes jrnPulseRing {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  70%  { transform: scale(1.5);  opacity: 0;   }
+  100% { transform: scale(1.5);  opacity: 0;   }
+}
+.jrn-pulse-active {
+  position: relative;
+}
+.jrn-pulse-active::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(108,43,238,0.55);
+  animation: jrnPulseRing 2.2s cubic-bezier(0.215,0.61,0.355,1) infinite;
+  pointer-events: none;
+}
+
+/* ── Shimmer gradient animation (Contact headline) ─────────── */
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Cert ring transition (Certification cards) ─────────────── */
+.cert-ring {
+  transition: border-color 0.4s ease;
+}
+
+/* ── Eyeball Cursor Tracking Animation ────────────────────── */
+.eye-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.eye {
+  width: 32px;
+  height: 32px;
+  background: #ffffff;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 0 15px rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.pupil {
+  width: 12px;
+  height: 12px;
+  background: #0f172a;
+  border-radius: 50%;
+  position: absolute;
+  transition: transform 0.05s linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Small glint on the pupil */
+.pupil::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 3px;
+  height: 3px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 50%;
+}

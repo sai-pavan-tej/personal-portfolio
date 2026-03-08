@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Teja Sai Pavan Nakka | Salesforce Developer Portfolio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#6c2bee",
+            "background-light": "#f6f6f8",
+            "background-dark": "#0a0812",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <!-- External stylesheets -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/hero.css">
+</head>
+
+<body
+  class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 selection:bg-primary/30">
+  <div class="grain"></div>
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 px-4 lg:px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between glass px-5 lg:px-8 py-3 rounded-full glass-premium">
+      <div class="flex items-center gap-3">
+        <div class="size-8 bg-primary rounded-lg flex items-center justify-center">
+          <span class="material-symbols-outlined text-white">code</span>
+        </div>
+        <span class="text-xl font-bold tracking-tight">TSPN<span class="text-primary italic">.dev</span></span>
+        
+        <!-- Interactive Eyeballs -->
+        <div class="hidden lg:flex eye-container ms-4" data-purpose="eye-tracking-interaction">
+          <div class="eye" id="eye-left">
+            <div class="pupil"></div>
+          </div>
+          <div class="eye" id="eye-right">
+            <div class="pupil"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a class="hover:text-primary transition-colors nav-link" href="#about">About</a>
+        <a class="hover:text-primary transition-colors nav-link" href="#experience">Experience</a>
+        <a class="hover:text-primary transition-colors nav-link" href="#skills">Skills</a>
+        <a class="hover:text-primary transition-colors nav-link" href="#projects">Projects</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="window.open('Teja_Sai_Pavan_Nakka__Latest_ (1).pdf','_blank')"
+          class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full font-bold text-sm transition-all shadow-lg shadow-primary/20">
+          Resume
+        </button>
+      </div>
+    </div>
+  </nav>
+  <main class="relative">
+    <!-- ═══════════ 3D HERO ═══════════ -->
+    <section id="hero3d">
+      <!-- ambient particle canvas -->
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- deep radial glow behind headline -->
+      <div class="hero-radial-glow"></div>
+
+      <!-- ── Floating 3D skill icon plates ──
+       STRUCTURE: .skill-icon (JS parallax) > .float-wrap (CSS idle float) > .icon-inner (glass plate)
+       This ensures CSS animation and JS transform never fight over the same element.
+  -->
+
+      <!-- Salesforce Cloud — left rail, upper -->
+      <div class="skill-icon" id="si-sf" style="width:68px;height:68px;top:16%;left:5%;opacity:0.78;">
+        <div class="float-wrap" style="animation:floatA 7s ease-in-out infinite;">
+          <div class="icon-inner">
+            <svg width="38" height="38" viewBox="0 0 64 64" fill="none">
+              <path
+                d="M26.5 14c-5.2 0-9.5 4-10 9a9 9 0 0 0-6.5 8.5A8.5 8.5 0 0 0 18.5 40h27a7 7 0 0 0 1-13.9A10.5 10.5 0 0 0 26.5 14z"
+                fill="#00A1E0" opacity="0.9" />
+              <path
+                d="M26.5 14c-5.2 0-9.5 4-10 9a9 9 0 0 0-6.5 8.5A8.5 8.5 0 0 0 18.5 40h27a7 7 0 0 0 1-13.9A10.5 10.5 0 0 0 26.5 14z"
+                fill="url(#sfg)" opacity="0.5" />
+              <defs>
+                <linearGradient id="sfg" x1="10" y1="14" x2="46" y2="40">
+                  <stop stop-color="#7c3aed" />
+                  <stop offset="1" stop-color="#00A1E0" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apex { } — left rail, center -->
+      <div class="skill-icon" id="si-apex" style="width:62px;height:62px;top:46%;left:4%;opacity:0.68;">
+        <div class="float-wrap" style="animation:floatB 9s ease-in-out infinite;">
+          <div class="icon-inner">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+              <text x="4" y="34" font-family="monospace" font-size="22" font-weight="900" fill="#a78bfa">{}</text>
+              <text x="14" y="30" font-family="monospace" font-size="10" font-weight="700" fill="#7c3aed">Ax</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- LWC Cube — left rail, lower -->
+      <div class="skill-icon" id="si-lwc" style="width:64px;height:64px;top:73%;left:5%;opacity:0.72;">
+        <div class="float-wrap" style="animation:floatC 8s ease-in-out infinite;">
+          <div class="icon-inner">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+              <rect x="8" y="8" width="32" height="32" rx="6" fill="none" stroke="#818cf8" stroke-width="2.5" />
+              <rect x="14" y="14" width="20" height="20" rx="3" fill="#4f46e5" opacity="0.6" />
+              <text x="17" y="29" font-family="monospace" font-size="9" font-weight="800" fill="#c7d2fe">LWC</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- CPQ — lower arc, left -->
+      <div class="skill-icon" id="si-cpq"
+        style="width:76px;height:48px;border-radius:14px;top:83%;left:23%;opacity:0.58;">
+        <div class="float-wrap" style="animation:floatD 10s ease-in-out infinite;">
+          <div class="icon-inner" style="border-radius:14px;">
+            <svg width="50" height="28" viewBox="0 0 56 28" fill="none">
+              <rect x="2" y="2" width="52" height="24" rx="8" fill="none" stroke="#9333ea" stroke-width="1.5" />
+              <text x="9" y="18" font-family='"Space Grotesk",sans-serif' font-size="11" font-weight="800"
+                fill="#c084fc">CPQ</text>
+              <circle cx="48" cy="14" r="5" fill="#7c3aed" opacity="0.7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- API — upper arc, right (mirrors Figma) -->
+      <div class="skill-icon" id="si-api" style="width:66px;height:66px;top:12%;right:20%;opacity:0.66;">
+        <div class="float-wrap" style="animation:floatE 11s ease-in-out infinite;">
+          <div class="icon-inner">
+            <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="7" fill="#6d28d9" opacity="0.8" />
+              <circle cx="8" cy="12" r="4" fill="#4338ca" opacity="0.6" />
+              <circle cx="40" cy="12" r="4" fill="#4338ca" opacity="0.6" />
+              <circle cx="8" cy="36" r="4" fill="#4338ca" opacity="0.6" />
+              <circle cx="40" cy="36" r="4" fill="#4338ca" opacity="0.6" />
+              <line x1="24" y1="17" x2="8" y2="12" stroke="#818cf8" stroke-width="1.2" opacity="0.7" />
+              <line x1="24" y1="17" x2="40" y2="12" stroke="#818cf8" stroke-width="1.2" opacity="0.7" />
+              <line x1="24" y1="31" x2="8" y2="36" stroke="#818cf8" stroke-width="1.2" opacity="0.7" />
+              <line x1="24" y1="31" x2="40" y2="36" stroke="#818cf8" stroke-width="1.2" opacity="0.7" />
+              <text x="16" y="27" font-family="monospace" font-size="8" font-weight="800" fill="#e0e7ff">API</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Database — right rail, upper -->
+      <div class="skill-icon" id="si-db"
+        style="width:58px;height:70px;border-radius:14px;top:24%;right:5%;opacity:0.68;">
+        <div class="float-wrap" style="animation:floatF 12s ease-in-out infinite;">
+          <div class="icon-inner" style="border-radius:14px;">
+            <svg width="36" height="46" viewBox="0 0 36 46" fill="none">
+              <ellipse cx="18" cy="10" rx="14" ry="5" fill="#312e81" stroke="#6366f1" stroke-width="1.5" />
+              <rect x="4" y="10" width="28" height="26" fill="#1e1b4b" opacity="0.8" />
+              <ellipse cx="18" cy="36" rx="14" ry="5" fill="#312e81" stroke="#6366f1" stroke-width="1.5" />
+              <line x1="4" y1="10" x2="4" y2="36" stroke="#4338ca" stroke-width="1.5" />
+              <line x1="32" y1="10" x2="32" y2="36" stroke="#4338ca" stroke-width="1.5" />
+              <line x1="10" y1="20" x2="26" y2="20" stroke="#818cf8" stroke-width="1" opacity="0.5" />
+              <line x1="10" y1="26" x2="22" y2="26" stroke="#818cf8" stroke-width="1" opacity="0.4" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lightning bolt — right rail, center -->
+      <div class="skill-icon" id="si-bolt"
+        style="width:50px;height:62px;border-radius:14px;top:47%;right:4%;opacity:0.75;">
+        <div class="float-wrap" style="animation:floatG 6.5s ease-in-out infinite;">
+          <div class="icon-inner" style="border-radius:14px;">
+            <svg width="28" height="40" viewBox="0 0 28 40" fill="none">
+              <polygon points="16,2 4,22 14,22 12,38 24,18 14,18" fill="#fbbf24" opacity="0.85" />
+              <polygon points="16,2 4,22 14,22 12,38 24,18 14,18" fill="url(#boltg)" opacity="0.5" />
+              <defs>
+                <linearGradient id="boltg" x1="4" y1="2" x2="24" y2="38">
+                  <stop stop-color="#7c3aed" />
+                  <stop offset="1" stop-color="#fbbf24" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- React atom — lower arc, right (mirrors CPQ) -->
+      <div class="skill-icon" id="si-react" style="width:64px;height:64px;top:80%;right:22%;opacity:0.58;">
+        <div class="float-wrap" style="animation:floatB 9.5s ease-in-out infinite 1s;">
+          <div class="icon-inner">
+            <svg width="38" height="38" viewBox="0 0 64 64" fill="none">
+              <ellipse cx="32" cy="32" rx="28" ry="11" fill="none" stroke="#38bdf8" stroke-width="2"
+                transform="rotate(0 32 32)" />
+              <ellipse cx="32" cy="32" rx="28" ry="11" fill="none" stroke="#818cf8" stroke-width="2"
+                transform="rotate(60 32 32)" />
+              <ellipse cx="32" cy="32" rx="28" ry="11" fill="none" stroke="#38bdf8" stroke-width="2"
+                transform="rotate(120 32 32)" />
+              <circle cx="32" cy="32" r="4" fill="#38bdf8" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Python — right rail, lower -->
+      <div class="skill-icon" id="si-py" style="width:60px;height:60px;top:70%;right:5%;opacity:0.68;">
+        <div class="float-wrap" style="animation:floatA 8.5s ease-in-out infinite 0.5s;">
+          <div class="icon-inner">
+            <svg width="36" height="36" viewBox="0 0 64 64" fill="none">
+              <path
+                d="M32 8c-8 0-14 3-14 8v6h14v2H20c-6 0-10 4-10 12s4 12 10 12h4v-6c0-4 3-6 8-6h12c5 0 8-2 8-7V16c0-5-5-8-12-8h-8z"
+                fill="#3b82f6" opacity="0.85" />
+              <path
+                d="M32 56c8 0 14-3 14-8v-6H32v-2h12c6 0 10-4 10-12s-4-12-10-12h-4v6c0 4-3 6-8 6H20c-5 0-8 2-8 7v12c0 5 5 8 12 8h8z"
+                fill="#f59e0b" opacity="0.85" />
+              <circle cx="26" cy="20" r="2.5" fill="white" opacity="0.75" />
+              <circle cx="38" cy="44" r="2.5" fill="white" opacity="0.75" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Figma — upper arc, left (mirrors API) -->
+      <div class="skill-icon" id="si-fig"
+        style="width:54px;height:68px;border-radius:16px;top:12%;left:21%;opacity:0.58;">
+        <div class="float-wrap" style="animation:floatD 7.5s ease-in-out infinite 2s;">
+          <div class="icon-inner" style="border-radius:16px;">
+            <svg width="28" height="44" viewBox="0 0 28 44" fill="none">
+              <rect x="2" y="2" width="12" height="12" rx="6" fill="#f24e1e" opacity="0.85" />
+              <rect x="14" y="2" width="12" height="12" rx="6" fill="#ff7262" opacity="0.85" />
+              <rect x="2" y="16" width="12" height="12" rx="3" fill="#a259ff" opacity="0.85" />
+              <circle cx="20" cy="22" r="6" fill="#1abcfe" opacity="0.85" />
+              <rect x="2" y="30" width="12" height="12" rx="3" fill="#0acf83" opacity="0.85" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data flow lines (decorative SVG, far back)
+       Routed to top + bottom thirds only, away from headline text zone -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none" style="opacity:0.05;z-index:1"
+        xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#7c3aed" stop-opacity="0" />
+            <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <!-- upper arc, stays above headline -->
+        <path d="M0,80 Q400,40 900,90 T1800,70" stroke="url(#lineGrad)" fill="none" stroke-width="1" />
+        <!-- lower arc, stays below cred strip -->
+        <path d="M0,620 Q500,580 1000,630 T1800,600" stroke="url(#lineGrad)" fill="none" stroke-width="0.8" />
+      </svg>
+
+      <!-- ── Hero content ── -->
+      <div class="hero-content">
+
+        <!-- availability badge -->
+        <div style="display:flex;justify-content:center;">
+          <span class="avail-badge">
+            <span
+              style="width:8px;height:8px;border-radius:50%;background:#a855f7;box-shadow:0 0 10px #a855f7;animation:breathePulse 2s ease-in-out infinite;"></span>
+            Open to Work &bull; Salesforce
+          </span>
+        </div>
+
+        <!-- headline -->
+        <h1 class="hero-headline">
+          Building better<br>
+          <span class="text-kinetic" style="font-style:italic;">Salesforce</span>
+          <span> workflows</span>
+        </h1>
+
+        <!-- sub-headline -->
+        <p class="hero-sub">
+          Software Engineer II focused on Apex, LWC, CPQ, Agentforce Revenue Management (RCA), and integrations
+          that improve automation and usability.
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="hero-cta-group">
+          <button class="btn-primary-hero"
+            onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+            View Projects
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
+          <button class="btn-secondary-hero"
+            onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            Contact Me
+          </button>
+        </div>
+
+        <!-- credibility strip -->
+        <div class="cred-strip">
+          <div class="cred-chip"><span class="cred-val">6x</span> Certified</div>
+          <div class="cred-chip"><span class="cred-val">4+</span> Years Experience</div>
+          <div class="cred-chip">CPQ &amp; Revenue Cloud</div>
+          <div class="cred-chip">LWC & Integrations</div>
+        </div>
+      </div>
+
+      <div class="hero-bottom-fog"></div>
+    </section>
+
+    <!-- External hero interaction script (particles + cursor parallax) -->
+    <script src="js/hero.js" defer></script>
+
+    <!-- About & Trailhead Dashboard -->
+    <section class="max-w-7xl mx-auto px-6 py-16 lg:pt-28 lg:pb-24 xl:pt-48 xl:pb-40" id="about">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-8 items-center">
+        <div class="lg:col-span-7">
+          <h2
+            class="text-2xl md:text-5xl lg:text-5xl xl:text-6xl font-black organic-underline inline-block mb-8 lg:mb-10 xl:mb-16">
+            About Me</h2>
+          <p class="text-base lg:text-lg text-slate-400 leading-relaxed mb-6 lg:mb-8 lg:pr-6 xl:pr-10">
+            I'm Pavan, I build enterprise Salesforce solutions that make revenue workflows smarter, faster, and more
+            reliable. As a
+            Software Engineer II at S&P Global, I contribute to CPQ-to-RCA transformation and create LWC experiences
+            that improve pricing, product configuration, and quoting. Before that, at Forsys, I delivered
+            managed-package solutions, CPQ customizations, NetSuite integrations, and reporting components, while also
+            gaining experience in automation, Lightning migration, and data engineering.
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+            <span class="px-4 py-2 rounded-full glass text-sm font-medium border border-white/5">Apex &amp; LWC</span>
+            <span class="px-4 py-2 rounded-full glass text-sm font-medium border border-white/5">CPQ &amp; Revenue
+              Cloud</span>
+            <span class="px-4 py-2 rounded-full glass text-sm font-medium border border-white/5">RCA / Agentforce
+              Vibes</span>
+          </div>
+        </div>
+        <div class="lg:col-span-5 w-full mt-8 lg:mt-0">
+          <div class="glass p-6 lg:p-8 rounded-2xl relative overflow-hidden group border border-primary/30 hover:shadow-[0_0_30px_rgba(108,43,238,0.15)] transition-shadow duration-500">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <span class="material-symbols-outlined text-8xl lg:text-9xl">military_tech</span>
+            </div>
+            <div class="flex items-center gap-4 lg:gap-6 mb-6 lg:mb-8">
+              <div
+                class="size-16 lg:size-20 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 flex-shrink-0">
+                <span class="material-symbols-outlined text-3xl lg:text-4xl text-white">star</span>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl lg:text-2xl font-bold truncate">Ranger Status</h3>
+                <p class="text-primary font-semibold lg:text-lg">Trailhead Profile</p>
+                <p class="text-slate-500 text-[10px] sm:text-xs mt-0.5 tracking-wide uppercase">Continuous learning</p>
+              </div>
+            </div>
+            <div class="space-y-4 lg:space-y-6 relative z-10">
+              <div class="flex justify-between items-end">
+                <span class="text-slate-400 text-sm lg:text-base">Points Earned</span>
+                <span class="text-2xl lg:text-4xl font-black">148,075</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-3 lg:h-4 overflow-hidden shadow-inner">
+                <div class="bg-primary h-full rounded-full w-[85%] relative overflow-hidden">
+                  <div class="absolute inset-0 bg-white/20 w-1/2 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-y-5 gap-x-2 sm:flex sm:justify-between sm:items-center pt-2 lg:pt-4">
+                <div class="text-center">
+                  <div class="text-xl lg:text-2xl font-bold">165</div>
+                  <div class="text-[10px] lg:text-xs text-slate-500 uppercase tracking-tighter">Badges</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-xl lg:text-2xl font-bold">3</div>
+                  <div class="text-[10px] lg:text-xs text-slate-500 uppercase tracking-tighter">Superbadges</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-xl lg:text-2xl font-bold">23</div>
+                  <div class="text-[10px] lg:text-xs text-slate-500 uppercase tracking-tighter">Projects</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-xl lg:text-2xl font-bold">22</div>
+                  <div class="text-[10px] lg:text-xs text-slate-500 uppercase tracking-tighter">Trails</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Professional Journey — Premium vertical timeline -->
+    <section class="py-16 lg:py-24 xl:py-36 overflow-hidden" id="experience">
+      <div class="max-w-5xl mx-auto px-6">
+
+        <!-- Section heading -->
+        <h2
+          class="text-2xl md:text-5xl lg:text-5xl xl:text-6xl font-black mb-10 lg:mb-14 xl:mb-20 text-center tracking-tight">
+          Professional <span class="text-kinetic" style="font-style:italic;">Journey</span>
+        </h2>
+
+        <!-- Timeline wrapper -->
+        <div class="relative" id="pj-wrapper">
+
+          <!-- Wavy spine — wide enough container for curves, z below nodes -->
+          <div class="absolute left-[-10px] md:left-0 top-0 bottom-0 pointer-events-none z-0 w-16 md:w-20" aria-hidden="true">
+            <svg class="w-full h-full" viewBox="0 0 80 1200" preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="spineGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.05" />
+                  <stop offset="10%" stop-color="#a855f7" stop-opacity="0.85" />
+                  <stop offset="85%" stop-color="#7c3aed" stop-opacity="0.65" />
+                  <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.05" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M30 0 C30 60,48 120,30 180 C12 240,30 300,30 360 C30 420,48 480,30 540 C12 600,30 660,30 720 C30 780,48 840,30 900 C12 960,30 1020,30 1080 C30 1140,30 1200,30 1200"
+                stroke="url(#spineGrad)" stroke-width="2" fill="none" stroke-linecap="round" />
+            </svg>
+          </div>
+
+
+          <!-- Entries -->
+          <div class="space-y-8 lg:space-y-10 xl:space-y-14 relative z-10">
+
+            <!-- ── Entry 1: S&P Global ── -->
+            <div class="flex gap-3 md:gap-8 items-start group" data-journey-entry>
+              <!-- Node -->
+              <div class="flex-shrink-0 flex flex-col items-center gap-2 jrn-node">
+                <div
+                  class="w-[48px] h-[48px] md:w-[60px] md:h-[60px] rounded-full glass border border-primary/40 flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow"
+                  data-journey-node-active>
+                  <span class="material-symbols-outlined text-2xl text-primary">rocket_launch</span>
+                </div>
+                <span
+                  class="text-[10px] font-bold text-primary/80 uppercase tracking-widest whitespace-nowrap bg-primary/10 px-2 py-0.5 rounded-full">2024
+                  — Now</span>
+              </div>
+              <!-- Card -->
+              <div
+                class="flex-1 glass border border-white/[0.06] rounded-2xl p-4 md:p-5 xl:p-8 hover:border-primary/25 transition-all duration-300 hover:bg-white/[0.02] jrn-card"
+                data-journey-card>
+                <h3 class="text-lg xl:text-2xl font-bold mb-1">Software Engineer II</h3>
+                <p class="text-slate-400 text-xs xl:text-sm mb-3 xl:mb-4">S&amp;P Global &nbsp;·&nbsp; Hyderabad</p>
+                <div class="flex flex-wrap gap-1.5 xl:gap-2 mb-3 xl:mb-5">
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">LWC</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">RCA
+                    /
+                    Agentforce</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">CPQ</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Apex</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold border border-emerald-500/40 text-emerald-400 bg-emerald-500/10 uppercase tracking-wide jrn-chip">Impact
+                    Score: High</span>
+                </div>
+                <p class="text-slate-300 text-xs xl:text-sm leading-relaxed">
+                  Driving CPQ-to-RCA transformation and implementing Agentforce Revenue Management for enterprise
+                  revenue workflows. Building complex LWC pages that improve product configuration, pricing accuracy,
+                  and quoting efficiency while maintaining Salesforce code quality through PMD and SF CLI Scanner
+                  standards.
+                </p>
+              </div>
+            </div>
+
+            <!-- ── Entry 2: Forsys Software ── -->
+            <div class="flex gap-3 md:gap-8 items-start group" data-journey-entry>
+              <div class="flex-shrink-0 flex flex-col items-center gap-2 jrn-node">
+                <div
+                  class="w-[48px] h-[48px] md:w-[60px] md:h-[60px] rounded-full glass border border-white/10 flex items-center justify-center group-hover:border-primary/30 transition-colors">
+                  <span
+                    class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary transition-colors">dataset</span>
+                </div>
+                <span
+                  class="text-[10px] font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap bg-white/5 px-2 py-0.5 rounded-full">2022
+                  – 2024</span>
+              </div>
+              <div
+                class="flex-1 glass border border-white/[0.06] rounded-2xl p-4 md:p-5 xl:p-8 hover:border-primary/25 transition-all duration-300 hover:bg-white/[0.02] jrn-card"
+                data-journey-card>
+                <h3 class="text-lg xl:text-2xl font-bold mb-1">Software Engineer II</h3>
+                <p class="text-slate-400 text-xs xl:text-sm mb-3 xl:mb-4">Forsys Software India Pvt. Ltd. - Hyderabad
+                </p>
+                <div class="flex flex-wrap gap-1.5 xl:gap-2 mb-3 xl:mb-5">
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Managed
+                    Packages</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">NetSuite
+                    Integration</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Custom
+                    LWC Reports</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">CPQ</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold border border-cyan-500/40 text-cyan-400 bg-cyan-500/10 uppercase tracking-wide jrn-chip">Package
+                    Adoption: Scaled</span>
+                </div>
+                <p class="text-slate-300 text-xs xl:text-sm leading-relaxed">
+                  Led development of Billing Workbench, an LWC-based managed package for billing operations, including
+                  mass actions for order and invoice management. Also delivered Salesforce-NetSuite integrations,
+                  Apex-based CPQ customizations, and custom LWC reporting components.
+                </p>
+              </div>
+            </div>
+
+            <!-- ── Entry 3: Asian Paints ── -->
+            <div class="flex gap-3 md:gap-8 items-start group" data-journey-entry>
+              <div class="flex-shrink-0 flex flex-col items-center gap-2 jrn-node">
+                <div
+                  class="w-[48px] h-[48px] md:w-[60px] md:h-[60px] rounded-full glass border border-white/10 flex items-center justify-center group-hover:border-primary/30 transition-colors">
+                  <span
+                    class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary transition-colors">shield_person</span>
+                </div>
+                <span
+                  class="text-[10px] font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap bg-white/5 px-2 py-0.5 rounded-full">2021
+                  – 2022</span>
+              </div>
+              <div
+                class="flex-1 glass border border-white/[0.06] rounded-2xl p-4 md:p-5 xl:p-8 hover:border-primary/25 transition-all duration-300 hover:bg-white/[0.02] jrn-card"
+                data-journey-card>
+                <h3 class="text-lg xl:text-2xl font-bold mb-1">Executive Programmer</h3>
+                <p class="text-slate-400 text-xs xl:text-sm mb-3 xl:mb-4">Asian Paints Ltd. &nbsp;·&nbsp; Mumbai</p>
+                <div class="flex flex-wrap gap-1.5 xl:gap-2 mb-3 xl:mb-5">
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Salesforce
+                    Admin</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Lightning
+                    Flow</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Informatica</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">SAS
+                    Analytics</span>
+
+                </div>
+                <p class="text-slate-300 text-xs xl:text-sm leading-relaxed">
+                  Worked across Salesforce administration and data engineering, including security permissions,
+                  automation with Process Builder and Lightning Flow, data cleansing via Informatica and SAS Studio, and
+                  analytics using SAS Visual Analytics.
+                </p>
+              </div>
+            </div>
+
+            <!-- ── Entry 4: Miracle Software ── -->
+            <div class="flex gap-3 md:gap-8 items-start group" data-journey-entry>
+              <div class="flex-shrink-0 flex flex-col items-center gap-2 jrn-node">
+                <div
+                  class="w-[48px] h-[48px] md:w-[60px] md:h-[60px] rounded-full glass border border-white/10 flex items-center justify-center group-hover:border-primary/30 transition-colors">
+                  <span
+                    class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary transition-colors">format_quote</span>
+                </div>
+                <span
+                  class="text-[10px] font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap bg-white/5 px-2 py-0.5 rounded-full">2021</span>
+              </div>
+              <div
+                class="flex-1 glass border border-white/[0.06] rounded-2xl p-4 md:p-5 xl:p-8 hover:border-primary/25 transition-all duration-300 hover:bg-white/[0.02] jrn-card"
+                data-journey-card>
+                <h3 class="text-lg xl:text-2xl font-bold mb-1">Salesforce Developer</h3>
+                <p class="text-slate-400 text-xs xl:text-sm mb-3 xl:mb-4">Miracle Software Systems &nbsp;·&nbsp;
+                  Visakhapatnam</p>
+                <div class="flex flex-wrap gap-1.5 xl:gap-2 mb-3 xl:mb-5">
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Lightning
+                    Migration</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">CPQ</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300 uppercase tracking-wide jrn-chip">Quote-to-Cash</span>
+                  <span
+                    class="px-2.5 py-0.5 xl:px-3 xl:py-1 rounded-md text-[10px] xl:text-[11px] font-semibold border border-amber-500/40 text-amber-400 bg-amber-500/10 uppercase tracking-wide jrn-chip">20%
+                    Faster Quotes</span>
+                </div>
+                <p class="text-slate-300 text-xs xl:text-sm leading-relaxed">
+                  Contributed to Salesforce Classic-to-Lightning migration and CPQ implementation, helping streamline
+                  quote-to-cash workflows and reduce quote generation time by 20% through improved pricing and product
+                  configuration solutions.
+                </p>
+              </div>
+            </div>
+
+          </div><!-- /entries -->
+        </div><!-- /timeline wrapper -->
+      </div>
+    </section>
+
+    <!-- Skills Bento Grid -->
+    <section class="bg-slate-900/30 py-24" id="skills">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2
+          class="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black organic-underline inline-block mb-12 lg:mb-16">
+          Expertise Stack</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+
+          <!-- Card 1: Salesforce Development -->
+          <div
+            class="md:col-span-2 lg:col-span-6 glass-premium p-4 md:p-5 xl:p-10 rounded-3xl border-l-2 border-primary/50 group hover:bg-white/[0.03] transition-all">
+            <h3 class="text-lg xl:text-2xl font-bold mb-3 xl:mb-6 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-xl xl:text-[24px]">cloud</span>
+              Salesforce Development
+            </h3>
+            <div class="flex flex-wrap gap-1.5 xl:gap-2">
+              <span
+                class="px-3 py-1.5 xl:px-4 xl:py-2 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Apex</span>
+              <span
+                class="px-3 py-1.5 xl:px-4 xl:py-2 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">LWC</span>
+              <span
+                class="px-3 py-1.5 xl:px-4 xl:py-2 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Salesforce
+                CPQ</span>
+              <span
+                class="px-3 py-1.5 xl:px-4 xl:py-2 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Agentforce
+                Revenue Management</span>
+              <span
+                class="px-3 py-1.5 xl:px-4 xl:py-2 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Salesforce
+                Integration</span>
+
+            </div>
+          </div>
+
+          <!-- Card 2: Frontend & UI Engineering -->
+          <div class="lg:col-span-3 glass-premium p-4 xl:p-8 rounded-3xl group hover:scale-[1.02] transition-transform">
+            <h3 class="text-base md:text-lg xl:text-xl font-bold mb-3 xl:mb-4 flex items-center gap-2 text-slate-300">
+              <span class="material-symbols-outlined text-primary text-lg xl:text-[24px]">code</span>
+              Frontend &amp; Web
+            </h3>
+            <div class="flex flex-wrap gap-1.5 xl:gap-2">
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">UI
+                Prototyping</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">React</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Tailwind</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Bootstrap</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Languages -->
+          <div class="lg:col-span-3 glass-premium p-4 xl:p-8 rounded-3xl group hover:scale-[1.02] transition-transform">
+            <h3 class="text-base md:text-lg xl:text-xl font-bold mb-3 xl:mb-4 flex items-center gap-2 text-slate-300">
+              <span class="material-symbols-outlined text-primary text-lg xl:text-[24px]">terminal</span>
+              Languages
+            </h3>
+            <div class="flex flex-wrap gap-1.5 xl:gap-2">
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">JavaScript</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Python</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Java</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">SQL</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Revenue & Workflow Systems -->
+          <div class="lg:col-span-4 glass-premium p-4 xl:p-8 rounded-3xl group hover:bg-white/[0.03] transition-all">
+            <h3 class="text-base md:text-lg xl:text-xl font-bold mb-3 xl:mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-lg xl:text-[24px]">receipt_long</span>
+              Revenue &amp; Workflow Systems
+            </h3>
+            <div class="flex flex-wrap gap-1.5 xl:gap-2">
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-lg text-xs font-semibold hover:bg-primary/20 transition-colors">CPQ</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-lg text-xs font-semibold hover:bg-primary/20 transition-colors">Revenue
+                Cloud</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-lg text-xs font-semibold hover:bg-primary/20 transition-colors">Quote-to-Cash</span>
+              <span
+                class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-lg text-xs font-semibold hover:bg-primary/20 transition-colors">Workflow
+                Automation</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Integrations & Tooling -->
+          <div
+            class="md:col-span-2 lg:col-span-8 glass-premium p-4 md:p-5 xl:p-10 rounded-3xl flex items-center gap-5 xl:gap-10 overflow-hidden relative group">
+            <div class="hidden lg:block">
+              <div
+                class="size-16 xl:size-24 bg-primary/20 rounded-2xl flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform">
+                <span
+                  class="material-symbols-outlined text-3xl xl:text-5xl text-primary">integration_instructions</span>
+              </div>
+            </div>
+            <div class="relative z-10">
+              <h3 class="text-lg xl:text-2xl font-bold mb-3 xl:mb-4">Integrations &amp; Tooling</h3>
+              <div class="flex flex-wrap gap-1.5 xl:gap-2">
+                <span
+                  class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Postman</span>
+                <span
+                  class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Git
+                  / GitHub</span>
+                <span
+                  class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">Informatica</span>
+                <span
+                  class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">APIs</span>
+                <span
+                  class="px-2.5 py-1 xl:px-3 bg-white/5 rounded-full text-xs font-semibold hover:bg-primary/20 transition-colors">NetSuite</span>
+              </div>
+            </div>
+            <div class="absolute -right-10 top-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+          </div>
+
+        </div>
+
+
+        <!-- Certifications — Modern glassmorphic card grid -->
+        <section class="max-w-7xl mx-auto px-6 py-16 lg:py-20 xl:py-24" id="certifications">
+          <div class="text-center mb-10 lg:mb-14">
+            <h2 class="text-2xl md:text-4xl lg:text-5xl font-black mb-3">Professional <span
+                class="text-primary">Certifications</span></h2>
+            <div class="flex items-center justify-center gap-2 mb-3 lg:hidden">
+              <span class="material-symbols-outlined text-[14px] text-primary/70 animate-pulse">swipe_left</span>
+              <span class="text-[10px] sm:text-xs font-bold text-primary/70 uppercase tracking-widest">Swipe to explore</span>
+            </div>
+            <p class="text-slate-400 text-sm">Salesforce Certified &nbsp;·&nbsp; 6x Credential Holder</p>
+          </div>
+
+          <div class="flex overflow-x-auto pb-6 -mx-6 px-6 snap-x snap-mandatory gap-4 hide-scrollbar lg:grid lg:grid-cols-5 lg:gap-5 lg:mx-0 lg:px-0 lg:pb-0 lg:overflow-visible">
+
+            <!-- Cert 1: Platform Developer I -->
+            <div
+              class="flex-none w-[75vw] sm:w-[260px] lg:w-auto snap-center group relative flex flex-col items-center glass-premium rounded-[1.8rem] p-5 lg:p-6 border border-white/[0.07] hover:border-primary/40 transition-all duration-500 overflow-hidden cursor-pointer">
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              </div>
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              </div>
+              <div class="relative w-20 h-20 lg:w-24 lg:h-24 mb-4 flex items-center justify-center">
+                <div
+                  class="absolute inset-0 rounded-full border border-primary/20 group-hover:border-primary/50 transition-colors cert-ring">
+                </div>
+                <img src="SF Logos/SF-Certified_Plat-Dev_High-Res.png" alt="Platform Developer I"
+                  class="w-14 h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <span class="text-[11px] font-black uppercase tracking-widest text-primary/70 mb-1">Developer</span>
+              <h3 class="text-xs lg:text-sm font-bold text-center leading-tight">Platform Developer I</h3>
+              <div class="mt-3 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+              <span class="mt-2 text-[10px] md:text-[9px] text-slate-500 font-semibold uppercase tracking-wider">Salesforce</span>
+            </div>
+
+            <!-- Cert 2: Administrator -->
+            <div
+              class="flex-none w-[75vw] sm:w-[260px] lg:w-auto snap-center group relative flex flex-col items-center glass-premium rounded-[1.8rem] p-5 lg:p-6 border border-white/[0.07] hover:border-violet-400/40 transition-all duration-500 overflow-hidden cursor-pointer">
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              </div>
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-violet-500/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              </div>
+              <div class="relative w-20 h-20 lg:w-24 lg:h-24 mb-4 flex items-center justify-center">
+                <div
+                  class="absolute inset-0 rounded-full border border-violet-400/20 group-hover:border-violet-400/50 transition-colors cert-ring">
+                </div>
+                <img src="SF Logos/SF-Certified_Platform-Admin_High-Res.png" alt="Administrator"
+                  class="w-14 h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <span class="text-[11px] font-black uppercase tracking-widest text-violet-400/70 mb-1">Admin</span>
+              <h3 class="text-xs lg:text-sm font-bold text-center leading-tight">Administrator</h3>
+              <div class="mt-3 w-full h-px bg-gradient-to-r from-transparent via-violet-400/30 to-transparent"></div>
+              <span class="mt-2 text-[10px] md:text-[9px] text-slate-500 font-semibold uppercase tracking-wider">Salesforce</span>
+            </div>
+
+            <!-- Cert 3: CPQ Specialist -->
+            <div
+              class="flex-none w-[75vw] sm:w-[260px] lg:w-auto snap-center group relative flex flex-col items-center glass-premium rounded-[1.8rem] p-5 lg:p-6 border border-white/[0.07] hover:border-cyan-400/40 transition-all duration-500 overflow-hidden cursor-pointer">
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              </div>
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              </div>
+              <div class="relative w-20 h-20 lg:w-24 lg:h-24 mb-4 flex items-center justify-center">
+                <div
+                  class="absolute inset-0 rounded-full border border-cyan-400/20 group-hover:border-cyan-400/50 transition-colors cert-ring">
+                </div>
+                <img src="SF Logos/CPQ Specialist.png" alt="CPQ Specialist"
+                  class="w-14 h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <span class="text-[11px] font-black uppercase tracking-widest text-cyan-400/70 mb-1">Specialist</span>
+              <h3 class="text-xs lg:text-sm font-bold text-center leading-tight">CPQ Specialist</h3>
+              <div class="mt-3 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"></div>
+              <span class="mt-2 text-[10px] md:text-[9px] text-slate-500 font-semibold uppercase tracking-wider">Salesforce</span>
+            </div>
+
+            <!-- Cert 4: Platform Developer II -->
+            <div
+              class="flex-none w-[75vw] sm:w-[260px] lg:w-auto snap-center group relative flex flex-col items-center glass-premium rounded-[1.8rem] p-5 lg:p-6 border border-white/[0.07] hover:border-emerald-400/40 transition-all duration-500 overflow-hidden cursor-pointer">
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              </div>
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              </div>
+              <div class="relative w-20 h-20 lg:w-24 lg:h-24 mb-4 flex items-center justify-center">
+                <div
+                  class="absolute inset-0 rounded-full border border-emerald-400/20 group-hover:border-emerald-400/50 transition-colors cert-ring">
+                </div>
+                <img src="SF Logos/SF-Certified_Platform-Developer-II_High-Res.png" alt="Platform Developer II"
+                  class="w-14 h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <span class="text-[11px] font-black uppercase tracking-widest text-emerald-400/70 mb-1">Developer</span>
+              <h3 class="text-xs lg:text-sm font-bold text-center leading-tight">Platform Dev II</h3>
+              <div class="mt-3 w-full h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent"></div>
+              <span class="mt-2 text-[10px] md:text-[9px] text-slate-500 font-semibold uppercase tracking-wider">Salesforce</span>
+            </div>
+
+            <!-- Cert 5: Agentforce Specialist -->
+            <div
+              class="flex-none w-[75vw] sm:w-[260px] lg:w-auto snap-center group relative flex flex-col items-center glass-premium rounded-[1.8rem] p-5 lg:p-6 border border-white/[0.07] hover:border-amber-400/40 transition-all duration-500 overflow-hidden cursor-pointer">
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              </div>
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-amber-500/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              </div>
+              <div
+                class="absolute top-3 right-3 bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                NEW</div>
+              <div class="relative w-20 h-20 lg:w-24 lg:h-24 mb-4 flex items-center justify-center">
+                <div
+                  class="absolute inset-0 rounded-full border border-amber-400/20 group-hover:border-amber-400/50 transition-colors cert-ring">
+                </div>
+                <img src="SF Logos/SF-Certified_Agentforce-Specialist_High-Res.png" alt="Agentforce Specialist"
+                  class="w-14 h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <span class="text-[11px] font-black uppercase tracking-widest text-amber-400/70 mb-1">Specialist</span>
+              <h3 class="text-xs lg:text-sm font-bold text-center leading-tight">Agentforce Specialist</h3>
+              <div class="mt-3 w-full h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent"></div>
+              <span class="mt-2 text-[10px] md:text-[9px] text-slate-500 font-semibold uppercase tracking-wider">Salesforce</span>
+            </div>
+
+          </div>
+        </section>
+        <!-- Projects -->
+        <section class="max-w-7xl mx-auto px-6 py-16 lg:py-20 xl:py-24" id="projects">
+          
+          <!-- Group 1: Enterprise Work Highlights -->
+          <div class="mb-16 lg:mb-24">
+            <div class="flex items-end justify-between mb-8 lg:mb-12">
+              <div>
+                <h2 class="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black organic-underline inline-block mb-3 lg:mb-4 xl:mb-6">
+                  Enterprise <span class="text-kinetic" style="font-style:italic;">Highlights</span></h2>
+                <div class="flex items-center gap-2 mb-3 lg:hidden">
+                  <span class="material-symbols-outlined text-[14px] text-primary/70 animate-pulse">swipe_left</span>
+                  <span class="text-[10px] sm:text-xs font-bold text-primary/70 uppercase tracking-widest">Swipe to explore</span>
+                </div>
+                <p class="text-slate-400 text-sm lg:text-base">Large-scale Salesforce implementations and transformations.</p>
+              </div>
+            </div>
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 lg:gap-6 pb-4 hide-scrollbar md:grid md:grid-cols-2 lg:grid-cols-2 -mx-6 px-6 md:mx-0 md:px-0 after:content-[''] after:w-[1px] md:after:hidden">
+              
+              <!-- CPQ to RCA Transformation -->
+              <div class="flex-none w-[85vw] sm:w-[320px] md:w-auto snap-center group relative rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden glass-premium hover:border-primary/50 transition-all p-4 md:p-5 lg:p-8 flex flex-col justify-center min-h-[220px]">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative z-10">
+                  <div class="flex items-center gap-3 mb-4 lg:mb-6">
+                    <div class="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <span class="material-symbols-outlined text-primary text-2xl">account_tree</span>
+                    </div>
+                    <span class="text-[10px] font-black border border-primary/40 px-3 py-1 rounded-full text-primary uppercase tracking-wider">CPQ &amp; Agentforce</span>
+                  </div>
+                  <h3 class="text-xl lg:text-3xl font-bold mb-3">CPQ to RCA Transformation</h3>
+                  <p class="text-slate-400 text-sm lg:text-base leading-relaxed">Enterprise revenue transformation initiative focused on moving CPQ workflows toward Agentforce Revenue Management (RCA), improving revenue process alignment for S&amp;P Global.</p>
+                </div>
+              </div>
+
+              <!-- Billing Workbench Managed Package -->
+              <div class="flex-none w-[85vw] sm:w-[320px] md:w-auto snap-center group relative rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden glass-premium hover:border-violet-400/50 transition-all p-4 md:p-5 lg:p-8 flex flex-col justify-center min-h-[220px]">
+                <div class="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative z-10">
+                  <div class="flex items-center gap-3 mb-4 lg:mb-6">
+                    <div class="size-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                      <span class="material-symbols-outlined text-violet-400 text-2xl">inventory_2</span>
+                    </div>
+                    <span class="text-[10px] font-black border border-violet-500/40 px-3 py-1 rounded-full text-violet-400 uppercase tracking-wider">LWC Managed Package</span>
+                  </div>
+                  <h3 class="text-xl lg:text-3xl font-bold mb-3">Billing Workbench Managed Package</h3>
+                  <p class="text-slate-400 text-sm lg:text-base leading-relaxed">LWC-based Salesforce managed package built to optimize billing workflows, including mass actions for order and invoice management.</p>
+                </div>
+              </div>
+
+              <!-- Salesforce-NetSuite Integration -->
+              <div class="flex-none w-[85vw] sm:w-[320px] md:w-auto snap-center group relative rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden glass-premium hover:border-cyan-400/50 transition-all p-4 md:p-5 lg:p-8 flex flex-col justify-center min-h-[220px]">
+                <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative z-10">
+                  <div class="flex items-center gap-3 mb-4 lg:mb-6">
+                    <div class="size-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                      <span class="material-symbols-outlined text-cyan-400 text-2xl">sync_alt</span>
+                    </div>
+                    <span class="text-[10px] font-black border border-cyan-500/40 px-3 py-1 rounded-full text-cyan-400 uppercase tracking-wider">Integration &amp; LWC</span>
+                  </div>
+                  <h3 class="text-xl lg:text-3xl font-bold mb-3">Salesforce-NetSuite Integration</h3>
+                  <p class="text-slate-400 text-sm lg:text-base leading-relaxed">Delivered integration components between Salesforce and NetSuite for a media client, along with Apex customizations and custom LWC reporting.</p>
+                </div>
+              </div>
+
+              <!-- Lightning Migration & CPQ Enablement -->
+              <div class="flex-none w-[85vw] sm:w-[320px] md:w-auto snap-center group relative rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden glass-premium hover:border-emerald-400/50 transition-all p-4 md:p-5 lg:p-8 flex flex-col justify-center min-h-[220px]">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative z-10">
+                  <div class="flex items-center gap-3 mb-4 lg:mb-6">
+                    <div class="size-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                      <span class="material-symbols-outlined text-emerald-400 text-2xl">bolt</span>
+                    </div>
+                    <span class="text-[10px] font-black border border-emerald-500/40 px-3 py-1 rounded-full text-emerald-400 uppercase tracking-wider">Lightning &amp; CPQ</span>
+                  </div>
+                  <h3 class="text-xl lg:text-3xl font-bold mb-3">Lightning Migration &amp; CPQ Enablement</h3>
+                  <p class="text-slate-400 text-sm lg:text-base leading-relaxed">Supported migration from Salesforce Classic to Lightning and implemented CPQ enhancements that improved quote-to-cash efficiency.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Group 2: Academic / Innovation Projects -->
+          <div>
+            <div class="flex items-end justify-between mb-8 lg:mb-10">
+              <div>
+                <h2 class="text-xl md:text-3xl lg:text-4xl xl:text-4xl font-black mb-2 lg:mb-3">
+                  Academic &amp; <span class="text-primary italic">Innovation</span> Projects</h2>
+                <div class="flex items-center gap-2 mb-3 lg:hidden">
+                  <span class="material-symbols-outlined text-[14px] text-primary/70 animate-pulse">swipe_left</span>
+                  <span class="text-[10px] sm:text-xs font-bold text-primary/70 uppercase tracking-widest">Swipe to explore</span>
+                </div>
+                <p class="text-slate-500 text-sm lg:text-base">Early career software engineering initiatives and hackathons.</p>
+              </div>
+            </div>
+            
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 lg:gap-6 pb-4 hide-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 -mx-6 px-6 md:mx-0 md:px-0 after:content-[''] after:w-[1px] md:after:hidden">
+              <!-- Bus Management -->
+              <a href="https://github.com/sai-pavan-tej/IntelliBusLogger" target="_blank" class="flex-none w-[75vw] sm:w-[280px] md:w-auto snap-center block group relative rounded-[2rem] overflow-hidden glass hover:border-primary/30 transition-all p-3 lg:p-4 cursor-pointer">
+                <div class="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-[1.4rem] overflow-hidden relative border border-white/5">
+                  <div class="absolute inset-0 flex items-center justify-center opacity-20 group-hover:scale-110 transition-transform duration-700">
+                    <span class="material-symbols-outlined text-[60px] lg:text-[80px]">directions_bus</span>
+                  </div>
+                </div>
+                <div class="p-3 lg:p-6">
+                  <div class="flex justify-between items-center mb-2 lg:mb-3">
+                    <h3 class="text-base xl:text-xl font-bold">Bus Management System</h3>
+                    <span class="text-[9px] font-black bg-white/5 border border-white/10 px-2.5 py-1 rounded-full text-slate-300">MERN</span>
+                  </div>
+                  <p class="text-slate-400 text-xs leading-relaxed">MERN-stack web application for college bus logistics with RFID-based tracking at the campus entrance.</p>
+                </div>
+              </a>
+              
+              <!-- ShopGo -->
+              <a href="https://github.com/sai-pavan-tej/ShopGo" target="_blank" class="flex-none w-[75vw] sm:w-[280px] md:w-auto snap-center block group relative rounded-[2rem] overflow-hidden glass hover:border-primary/30 transition-all p-3 lg:p-4 cursor-pointer">
+                <div class="aspect-video bg-gradient-to-br from-purple-900/20 to-slate-900 rounded-[1.4rem] overflow-hidden relative border border-white/5">
+                  <div class="absolute inset-0 flex items-center justify-center opacity-20 group-hover:scale-110 transition-transform duration-700">
+                    <span class="material-symbols-outlined text-[60px] lg:text-[80px]">shopping_cart</span>
+                  </div>
+                </div>
+                <div class="p-3 lg:p-6">
+                  <div class="flex justify-between items-center mb-2 lg:mb-3">
+                    <h3 class="text-base xl:text-xl font-bold">ShopGo</h3>
+                    <span class="text-[9px] font-black bg-white/5 border border-white/10 px-2.5 py-1 rounded-full text-slate-300">FLUTTER</span>
+                  </div>
+                  <p class="text-slate-400 text-xs leading-relaxed">Flutter-based smart shopping application designed to reduce billing and checkout wait times using sensors.</p>
+                </div>
+              </a>
+              
+              <!-- Health Care AR -->
+              <a href="https://youtu.be/8Ok2TKxTM3E" target="_blank" class="flex-none w-[75vw] sm:w-[280px] md:w-auto snap-center block group relative rounded-[2rem] overflow-hidden glass hover:border-primary/30 transition-all p-3 lg:p-4 cursor-pointer">
+                <div class="aspect-video bg-gradient-to-br from-slate-900 to-primary/10 rounded-[1.4rem] overflow-hidden relative border border-white/5">
+                  <div class="absolute inset-0 flex items-center justify-center opacity-20 group-hover:scale-110 transition-transform duration-700">
+                    <span class="material-symbols-outlined text-[60px] lg:text-[80px]">monitor_heart</span>
+                  </div>
+                </div>
+                <div class="p-3 lg:p-6">
+                  <div class="flex justify-between items-center mb-2 lg:mb-3">
+                    <h3 class="text-base xl:text-xl font-bold">Health Care AR</h3>
+                    <span class="text-[9px] font-black bg-white/5 border border-white/10 px-2.5 py-1 rounded-full text-slate-300">UNITY</span>
+                  </div>
+                  <p class="text-slate-400 text-xs leading-relaxed">Unity-based application that renders a 3D heart model and displays real-time heartbeat data.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+        <!-- Publication & Achievements Section -->
+        <section class="max-w-7xl mx-auto px-6 py-16 lg:py-20 xl:py-24">
+          <div class="grid lg:grid-cols-1 xl:grid-cols-2 gap-10 lg:gap-14 xl:gap-12 items-start">
+
+            <!-- Research Publication -->
+            <div>
+              <h2 class="text-xl lg:text-3xl xl:text-4xl font-black mb-6 lg:mb-8 text-center xl:text-left">Research <span
+                  class="text-primary italic">Publication</span></h2>
+              <div
+                class="relative glass-premium p-4 md:p-6 lg:p-10 rounded-3xl border border-primary/20 overflow-hidden group hover:border-primary/50 transition-all duration-700 hover:shadow-[0_0_40px_rgba(108,43,238,0.2)]">
+                <!-- Kinetic background: animated grid lines -->
+                <div class="absolute inset-0 opacity-[0.04] group-hover:opacity-[0.1] transition-opacity duration-700"
+                  style="background-image: linear-gradient(#a855f7 1px, transparent 1px), linear-gradient(90deg, #a855f7 1px, transparent 1px); background-size: 32px 32px;">
+                </div>
+                <!-- Shimmer highlight -->
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                
+                <!-- Floating orbs -->
+                <div
+                  class="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/40 group-hover:scale-150 transition-all duration-1000">
+                </div>
+                <div class="absolute -top-10 left-1/4 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl group-hover:animate-pulse transition-all duration-700">
+                </div>
+                
+                <!-- IEEE badge -->
+                <div class="relative flex items-center justify-between gap-3 mb-6">
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="flex items-center justify-center size-12 lg:size-14 rounded-2xl bg-primary/20 border border-primary/40 group-hover:scale-110 transition-transform duration-500">
+                      <span class="material-symbols-outlined text-primary text-2xl lg:text-3xl">article</span>
+                    </div>
+                    <div>
+                      <span class="text-primary text-xs lg:text-sm font-black uppercase tracking-widest">IEEE Xplore</span>
+                      <p class="text-slate-400 text-xs lg:text-sm">March 2020</p>
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] lg:text-xs font-bold px-3 py-1.5 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                    <span class="material-symbols-outlined text-[14px]">verified</span> Published
+                  </div>
+                </div>
+                <h3 class="relative text-base md:text-lg lg:text-2xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors duration-300">SHOP GO: An IoT based device and
+                  Mobile App for smart shopping</h3>
+                <p class="relative text-slate-400 text-sm lg:text-base mb-6 lg:mb-8 leading-relaxed">Enabling 10x faster checkout
+                  experience in supermarkets with a custom effective security system for the billing process.</p>
+                
+                <!-- Stats row -->
+                <div class="relative grid grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-8">
+                  <div class="flex flex-col items-center bg-white/5 rounded-2xl px-2 py-3 lg:py-4 border border-white/[0.06] group-hover:bg-white/10 transition-colors">
+                    <span class="text-xl lg:text-3xl font-black text-primary">10x</span>
+                    <span class="text-[9px] lg:text-[10px] text-slate-400 uppercase tracking-widest mt-1">Faster</span>
+                  </div>
+                  <div class="flex flex-col items-center bg-white/5 rounded-2xl px-2 py-3 lg:py-4 border border-white/[0.06] group-hover:bg-white/10 transition-colors">
+                    <span class="text-xl lg:text-3xl font-black text-emerald-400">IoT</span>
+                    <span class="text-[9px] lg:text-[10px] text-slate-400 uppercase tracking-widest mt-1">Powered</span>
+                  </div>
+                  <div class="flex flex-col items-center bg-white/5 rounded-2xl px-2 py-3 lg:py-4 border border-white/[0.06] group-hover:bg-white/10 transition-colors">
+                    <span class="text-xl lg:text-3xl font-black text-violet-400">2020</span>
+                    <span class="text-[9px] lg:text-[10px] text-slate-400 uppercase tracking-widest mt-1">Published</span>
+                  </div>
+                </div>
+                
+                <a class="relative inline-flex items-center justify-center w-full bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/40 rounded-xl py-3 lg:py-4 gap-2 text-white font-bold text-sm lg:text-base transition-all group/link"
+                  href="https://ieeexplore.ieee.org/document/9132889" target="_blank">
+                  View Full Paper <span class="text-primary">on IEEE</span>
+                  <span
+                    class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Academic Achievements -->
+            <div>
+              <h2 class="text-xl lg:text-3xl xl:text-4xl font-black mb-6 lg:mb-8 text-center xl:text-left">Academic <span
+                  class="text-kinetic italic">Achievements</span></h2>
+              <div class="space-y-4 lg:space-y-6">
+
+                <!-- Achievement 1 -->
+                <div
+                  class="relative glass p-4 md:p-5 lg:p-8 rounded-3xl flex items-center gap-4 lg:gap-8 overflow-hidden group border border-white/[0.08] hover:border-yellow-400/50 hover:bg-yellow-400/[0.02] transition-all duration-500 cursor-default">
+                  <!-- Animated shimmer bar -->
+                  <div
+                    class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000">
+                  </div>
+                  <div
+                    class="absolute -right-10 top-0 bottom-0 w-32 bg-yellow-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  </div>
+                  <!-- Medal -->
+                  <div class="relative flex-shrink-0">
+                    <div
+                      class="size-16 lg:size-20 rounded-full bg-gradient-to-br from-yellow-400/20 to-yellow-600/5 border border-yellow-400/30 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(250,204,21,0.1)] group-hover:shadow-[0_0_30px_rgba(250,204,21,0.25)]">
+                      <span class="material-symbols-outlined text-yellow-400 text-3xl lg:text-4xl">emoji_events</span>
+                    </div>
+                    <div
+                      class="absolute top-0 -right-2 size-7 lg:size-8 rounded-full bg-yellow-500/20 border border-yellow-400 flex items-center justify-center shadow-lg backdrop-blur-md">
+                      <span class="text-xs lg:text-sm font-black text-yellow-300">2<sup class="text-[8px] lg:text-[9px]">nd</sup></span>
+                    </div>
+                  </div>
+                  <div class="relative flex-1 min-w-0">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 lg:mb-3">
+                      <h4 class="font-bold text-lg lg:text-xl text-white group-hover:text-yellow-100 transition-colors">State Level Hackathon</h4>
+                    </div>
+                    <p class="text-sm border-l-2 border-yellow-400/30 pl-3 py-1 text-slate-300 leading-relaxed mb-3">AR Museum &mdash; Built with Unity <br><span class="text-xs text-slate-400">Miracle Software Systems</span>
+                    </p>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-lg">
+                      <span class="material-symbols-outlined text-[14px] text-slate-400">calendar_month</span>
+                      <p class="text-[10px] lg:text-xs text-slate-400 font-semibold uppercase tracking-widest">December 2018</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Achievement 2 -->
+                <div
+                  class="relative glass p-4 md:p-5 lg:p-8 rounded-3xl flex items-center gap-4 lg:gap-8 overflow-hidden group border border-white/[0.08] hover:border-slate-300/50 hover:bg-slate-300/[0.02] transition-all duration-500 cursor-default">
+                  <div
+                    class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000">
+                  </div>
+                  <div
+                    class="absolute -right-10 top-0 bottom-0 w-32 bg-slate-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  </div>
+                  <!-- Medal -->
+                  <div class="relative flex-shrink-0">
+                    <div
+                      class="size-16 lg:size-20 rounded-full bg-gradient-to-br from-slate-300/20 to-slate-500/5 border border-slate-300/30 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-[0_0_20px_rgba(203,213,225,0.1)] group-hover:shadow-[0_0_30px_rgba(203,213,225,0.25)]">
+                      <span class="material-symbols-outlined text-slate-300 text-3xl lg:text-4xl">workspace_premium</span>
+                    </div>
+                    <div
+                      class="absolute top-0 -right-2 size-7 lg:size-8 rounded-full bg-slate-500/20 border border-slate-300 flex items-center justify-center shadow-lg backdrop-blur-md">
+                      <span class="text-xs lg:text-sm font-black text-slate-200">2<sup class="text-[8px] lg:text-[9px]">nd</sup></span>
+                    </div>
+                  </div>
+                  <div class="relative flex-1 min-w-0">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 lg:mb-3">
+                      <h4 class="font-bold text-lg lg:text-xl text-white group-hover:text-slate-100 transition-colors">Zonal Level Hackathon</h4>
+                    </div>
+                    <p class="text-sm border-l-2 border-slate-400/30 pl-3 py-1 text-slate-300 leading-relaxed mb-3">Warehouse Management System<br><span class="text-xs text-slate-400">Miracle Software Systems</span>
+                    </p>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-lg">
+                      <span class="material-symbols-outlined text-[14px] text-slate-400">calendar_month</span>
+                      <p class="text-[10px] lg:text-xs text-slate-400 font-semibold uppercase tracking-widest">December 2018</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- Contact — Recruiter-First Two-Column Bento -->
+        <section class="relative max-w-7xl mx-auto px-6 py-16 lg:py-24 xl:py-28 overflow-hidden" id="contact">
+
+          <!-- Ambient background glow -->
+          <div
+            class="absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-primary/6 rounded-full blur-[120px] pointer-events-none">
+          </div>
+          <div
+            class="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-violet-500/5 rounded-full blur-[80px] pointer-events-none">
+          </div>
+
+          <div class="relative z-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+            <!-- ── LEFT: Identity + seeking info ── (4 cols) -->
+            <div class="lg:col-span-4 flex flex-col gap-7 lg:sticky lg:top-24">
+
+              <!-- Eyebrow -->
+              <div
+                class="inline-flex items-center gap-2 w-fit bg-emerald-500/10 border border-emerald-500/25 px-4 py-1.5 rounded-full">
+                <span class="size-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-emerald-400 text-xs font-black uppercase tracking-widest">Open to Work</span>
+              </div>
+
+              <!-- Headline -->
+              <h2 class="text-4xl lg:text-5xl font-black leading-[1.05] tracking-tight">
+                Let's build<br>something
+                <span
+                  class="block bg-gradient-to-r from-primary via-violet-400 to-primary bg-clip-text text-transparent bg-[size:200%] animate-[shimmer_4s_ease-in-out_infinite]">together.</span>
+              </h2>
+
+              <!-- Body -->
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Salesforce developer with <span class="text-white font-semibold">4+ years</span> building enterprise
+                solutions on Apex, LWC, CPQ, Agentforce Revenue Management (RCA), and integrations. Always happy to talk
+                shop with recruiters.
+              </p>
+
+              <!-- Trust strip -->
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="glass px-3.5 py-1.5 rounded-full text-[11px] font-bold text-slate-300 border border-white/[0.07]">6x
+                  Certified</span>
+                <span
+                  class="glass px-3.5 py-1.5 rounded-full text-[11px] font-bold text-slate-300 border border-white/[0.07]">SE
+                  II</span>
+                <span
+                  class="glass px-3.5 py-1.5 rounded-full text-[11px] font-bold text-slate-300 border border-white/[0.07]">Hyderabad
+                  / Remote</span>
+              </div>
+
+              <!-- Seeking list -->
+              <div class="space-y-3 pt-1">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-600">Currently seeking</p>
+                <ul class="space-y-2.5">
+                  <li class="flex items-start gap-3">
+                    <span
+                      class="mt-0.5 size-5 rounded-full bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                      <span class="material-symbols-outlined text-[13px] text-primary">check</span>
+                    </span>
+                    <span class="text-sm text-slate-300">Full-time Salesforce Developer roles</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span
+                      class="mt-0.5 size-5 rounded-full bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                      <span class="material-symbols-outlined text-[13px] text-primary">check</span>
+                    </span>
+                    <span class="text-sm text-slate-300">Remote-first or Hybrid positions</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span
+                      class="mt-0.5 size-5 rounded-full bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                      <span class="material-symbols-outlined text-[13px] text-primary">check</span>
+                    </span>
+                    <span class="text-sm text-slate-300">Apex · LWC · CPQ · Integration focus</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span
+                      class="mt-0.5 size-5 rounded-full bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                      <span class="material-symbols-outlined text-[13px] text-primary">check</span>
+                    </span>
+                    <span class="text-sm text-slate-300">Agentforce / AI-enabled Salesforce teams</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Compact availability pill -->
+              <div class="flex items-center gap-3 glass rounded-2xl px-4 py-3 border border-emerald-500/15 w-fit">
+                <span class="relative flex size-2">
+                  <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full size-2 bg-emerald-400"></span>
+                </span>
+                <span class="text-xs font-bold text-slate-300">Available Now &mdash; Full-Time · Remote / Hybrid</span>
+              </div>
+
+            </div>
+
+            <!-- ── RIGHT: Bento action cards ── (8 cols) -->
+            <div class="lg:col-span-8 flex flex-col gap-4 lg:gap-5">
+
+              <!-- ROW 1: Email (wide, horizontal) -->
+              <a href="mailto:pavansai0099@gmail.com"
+                class="group relative glass-premium rounded-3xl p-5 md:p-6 lg:p-7 border border-white/[0.07] hover:border-primary/40 transition-all duration-500 overflow-hidden flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-primary/6 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+                <div
+                  class="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                </div>
+                <div
+                  class="relative size-16 flex-shrink-0 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <span class="material-symbols-outlined text-primary text-3xl">mail</span>
+                </div>
+                <div class="relative flex-1 min-w-0">
+                  <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Primary Contact</p>
+                  <h3 class="text-lg lg:text-xl font-bold text-white mb-0.5 break-all sm:break-normal">pavansai0099@gmail.com</h3>
+                  <p class="text-xs text-slate-500">Preferred for recruiter outreach &mdash; typically responds within
+                    24h</p>
+                </div>
+                <div
+                  class="relative flex-shrink-0 flex items-center gap-1.5 text-primary font-bold text-sm group-hover:gap-3 transition-all">
+                  Email Me <span
+                    class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </div>
+              </a>
+
+              <!-- ROW 2: Resume (3/5) + LinkedIn (2/5) -->
+              <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 lg:gap-5">
+
+                <!-- Resume -->
+                <a href="Teja_Sai_Pavan_Nakka__Latest_ (1).pdf" download
+                  class="sm:col-span-3 group relative glass-premium rounded-3xl p-5 lg:p-6 border border-white/[0.07] hover:border-violet-400/40 transition-all duration-500 overflow-hidden flex flex-col gap-4 md:gap-5">
+                  <div
+                    class="absolute inset-0 bg-gradient-to-br from-violet-500/6 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  </div>
+                  <div
+                    class="absolute -top-8 -right-8 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  </div>
+                  <div class="relative flex items-center gap-3">
+                    <div
+                      class="size-12 rounded-2xl bg-violet-500/15 border border-violet-400/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <span class="material-symbols-outlined text-violet-400 text-2xl">description</span>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-0.5">Resume</p>
+                      <span
+                        class="text-[10px] bg-violet-500/15 border border-violet-400/20 text-violet-300 font-bold px-2 py-0.5 rounded-full">PDF
+                        &middot; 2026</span>
+                    </div>
+                  </div>
+                  <div class="relative flex-1">
+                    <h3 class="text-base lg:text-lg font-bold text-white mb-1">Download Latest CV</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">Salesforce Developer &middot; 4+ Years &middot;
+                      Apex, LWC, CPQ</p>
+                  </div>
+                  <div
+                    class="relative flex items-center gap-1.5 text-violet-400 text-xs font-bold group-hover:gap-2.5 transition-all">
+                    View Resume <span
+                      class="material-symbols-outlined text-sm group-hover:translate-y-0.5 transition-transform">download</span>
+                  </div>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/teja-sai-pavan-99b68915a/" target="_blank"
+                  class="sm:col-span-2 group relative glass-premium rounded-3xl p-5 lg:p-6 border border-white/[0.07] hover:border-cyan-400/40 transition-all duration-500 overflow-hidden flex flex-col gap-4 md:gap-5">
+                  <div
+                    class="absolute inset-0 bg-gradient-to-b from-cyan-500/6 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  </div>
+                  <div
+                    class="absolute -bottom-8 -left-8 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  </div>
+                  <div
+                    class="relative size-12 rounded-2xl bg-cyan-500/15 border border-cyan-400/25 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                  </div>
+                  <div class="relative flex-1">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">LinkedIn</p>
+                    <h3 class="text-base lg:text-lg font-bold text-white mb-1">Connect Professionally</h3>
+                    <p class="text-xs text-slate-500">in/teja-sai-pavan</p>
+                  </div>
+                  <div
+                    class="relative flex items-center gap-1.5 text-cyan-400 text-xs font-bold group-hover:gap-2.5 transition-all">
+                    Open Profile <span
+                      class="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">open_in_new</span>
+                  </div>
+                </a>
+
+              </div>
+
+              <!-- ROW 3: GitHub + Trailhead (equal halves) -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+
+                <!-- GitHub -->
+                <a href="https://github.com/sai-pavan-tej" target="_blank"
+                  class="group relative glass-premium rounded-3xl p-5 lg:p-6 border border-white/[0.07] hover:border-slate-400/30 transition-all duration-500 overflow-hidden flex items-center gap-4">
+                  <div
+                    class="absolute inset-0 bg-gradient-to-r from-slate-400/4 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  </div>
+                  <div
+                    class="relative size-11 flex-shrink-0 rounded-2xl bg-white/8 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-5 h-5 text-slate-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg>
+                  </div>
+                  <div class="relative flex-1 min-w-0">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-0.5">GitHub</p>
+                    <h3 class="text-sm font-bold text-white">sai-pavan-tej</h3>
+                  </div>
+                  <span
+                    class="material-symbols-outlined text-slate-500 text-sm group-hover:translate-x-0.5 group-hover:text-slate-300 transition-all">open_in_new</span>
+                </a>
+
+                <!-- Trailhead -->
+                <a href="https://www.salesforce.com/trailblazer/ntspavan" target="_blank"
+                  class="group relative glass-premium rounded-3xl p-5 lg:p-6 border border-white/[0.07] hover:border-orange-400/35 transition-all duration-500 overflow-hidden flex items-center gap-4">
+                  <div
+                    class="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  </div>
+                  <div
+                    class="absolute -bottom-6 -right-6 w-24 h-24 bg-orange-500/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  </div>
+                  <div
+                    class="relative size-11 flex-shrink-0 rounded-2xl bg-orange-500/12 border border-orange-400/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <!-- Trailhead cloud icon -->
+                    <svg class="w-6 h-6 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M11.5 2C8.46 2 6 4.46 6 7.5c0 .28.02.55.06.82C4.22 9.25 3 11.16 3 13.5 3 16.54 5.46 19 8.5 19H17c2.76 0 5-2.24 5-5 0-2.42-1.72-4.44-4.01-4.9C17.36 4.3 14.62 2 11.5 2zm-.5 9l3 3-3 3v-2H8v-2h3V11z" />
+                    </svg>
+                  </div>
+                  <div class="relative flex-1 min-w-0">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-0.5">Trailhead</p>
+                    <h3 class="text-sm font-bold text-white">ntspavan</h3>
+                  </div>
+                  <span
+                    class="material-symbols-outlined text-slate-500 text-sm group-hover:translate-x-0.5 group-hover:text-orange-400 transition-all">open_in_new</span>
+                </a>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+  </main>
+  <footer class="py-12 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="flex items-center gap-3">
+        <div class="size-6 bg-primary rounded flex items-center justify-center">
+          <span class="material-symbols-outlined text-[14px] text-white">code</span>
+        </div>
+        <span class="font-bold">TSPN.dev</span>
+      </div>
+      <p class="text-slate-500 text-sm text-center md:text-left">© 2026 Teja Sai Pavan Nakka. Crafted with ❤️ for the Salesforce ecosystem.</p>
+      <div class="flex flex-wrap justify-center gap-6">
+        <a class="text-slate-400 hover:text-primary transition-colors"
+          href="https://www.linkedin.com/in/teja-sai-pavan-99b68915a/" target="_blank"><span
+            class="font-medium">LinkedIn</span></a>
+        <a class="text-slate-400 hover:text-primary transition-colors" href="https://github.com/sai-pavan-tej"
+          target="_blank"><span class="font-medium">GitHub</span></a>
+        <a class="text-slate-400 hover:text-orange-400 transition-colors"
+          href="https://www.salesforce.com/trailblazer/ntspavan" target="_blank"><span
+            class="font-medium">Trailhead</span></a>
+      </div>
+    </div>
+  </footer>
+  <script src="js/journey.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,426 @@
+/* ============================================================
+   hero.css — 3D Hero Section Styles
+   Portfolio: Teja Sai Pavan Nakka  |  TSPN.dev
+   ============================================================
+   Mobile-first approach:
+     Base styles   → mobile  (< 640px)
+     @media 640px  → tablet
+     @media 1024px → desktop
+     @media 1280px → large desktop
+*/
+
+/* ── CSS custom properties ───────────────────────────────── */
+:root {
+    --nav-h: 72px; /* height of fixed nav bar */
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION CONTAINER
+═══════════════════════════════════════════════════════════ */
+#hero3d {
+    position: relative;
+    min-height: 100svh;
+    min-height: 100dvh;
+    padding-top: var(--nav-h); /* push content below fixed nav */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Use clip instead of hidden so italic text can bleed
+       past the content box without hard-clipping */
+    overflow-x: clip;
+    overflow-y: visible;
+    background: radial-gradient(ellipse 120% 80% at 50% 0%,
+        #0d0520 0%, #090112 60%, #050010 100%);
+}
+
+/* ── Particle canvas ─────────────────────────────────────── */
+#hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* ── Atmospheric glow behind headline ────────────────────── */
+.hero-radial-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(900px, 90vw);
+    height: min(500px, 60vh);
+    background: radial-gradient(ellipse,
+        rgba(108, 43, 238, 0.18) 0%,
+        rgba(88, 28, 255, 0.08) 40%,
+        transparent 70%);
+    pointer-events: none;
+    filter: blur(40px);
+}
+
+/* ── Bottom fade to page ─────────────────────────────────── */
+.hero-bottom-fog {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 160px;
+    background: linear-gradient(to top, #050010 0%, transparent 100%);
+    pointer-events: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   FLOATING SKILL ICONS
+   ─────────────────────────────────────────────────────────
+   Hidden on mobile. Revealed progressively at larger sizes.
+   Two-layer architecture:
+     .skill-icon  → JS-controlled (parallax/tilt)
+     .float-wrap  → CSS-controlled (idle float keyframes)
+     .icon-inner  → glass plate with SVG
+═══════════════════════════════════════════════════════════ */
+.skill-icon {
+    position: absolute;
+    display: none; /* hidden by default on mobile */
+    border-radius: 18px;
+    will-change: transform;
+    cursor: default;
+    user-select: none;
+}
+
+.float-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Glass plate */
+.skill-icon .icon-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(16px) saturate(150%);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.07) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover glow */
+.skill-icon:hover .icon-inner,
+.float-wrap:hover   .icon-inner {
+    border-color: rgba(168, 85, 247, 0.55);
+    box-shadow: 0 8px 40px rgba(108, 43, 238, 0.4),
+                0 0 0 1px rgba(168, 85, 247, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.skill-icon svg { display: block; }
+
+
+/* ── Idle float keyframes ─────────────────────────────────── */
+@keyframes floatA {
+    0%, 100% { transform: translateY(0px)   rotate(0deg); }
+    50%       { transform: translateY(-14px) rotate(1.5deg); }
+}
+@keyframes floatB {
+    0%, 100% { transform: translateY(0px)   rotate(0deg); }
+    50%       { transform: translateY(-10px) rotate(-2deg); }
+}
+@keyframes floatC {
+    0%, 100% { transform: translateY(0px)   rotate(0deg); }
+    33%       { transform: translateY(-8px)  rotate(1deg); }
+    66%       { transform: translateY(-16px) rotate(-1deg); }
+}
+@keyframes floatD {
+    0%, 100% { transform: translateY(0px)   rotate(0deg); }
+    50%       { transform: translateY(-12px) rotate(2deg); }
+}
+@keyframes floatE {
+    0%, 100% { transform: translateY(0px)  rotate(0deg); }
+    50%       { transform: translateY(-6px) rotate(-1.5deg); }
+}
+@keyframes floatF {
+    0%, 100% { transform: translateY(0px)   rotate(0deg); }
+    60%       { transform: translateY(-18px) rotate(1deg); }
+}
+@keyframes floatG {
+    0%, 100% { transform: translateY(0px)  rotate(0deg); }
+    40%       { transform: translateY(-9px) rotate(-2.5deg); }
+}
+
+@keyframes breathePulse {
+    0%, 100% { opacity: 0.55; }
+    50%       { opacity: 0.9; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   HERO CONTENT — MOBILE BASE
+   All values start small and scale up via media queries.
+═══════════════════════════════════════════════════════════ */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    /* More top breathing room so badge feels airy, not jammed under nav */
+    padding: clamp(2.5rem, 7dvh, 6rem) 1.25rem clamp(1rem, 3dvh, 3rem);
+}
+
+/* Availability badge */
+.avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(108, 43, 238, 0.08);
+    border: 1px solid rgba(108, 43, 238, 0.25);
+    color: #a855f7;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: clamp(0.75rem, 2dvh, 1.75rem);
+}
+
+/* Main headline */
+.hero-headline {
+    /* Mobile: compact, tablet+: grows with viewport */
+    font-size: clamp(2rem, 8vw, 4.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #f0e8ff;
+    margin-bottom: clamp(0.75rem, 1.5dvh, 1.5rem);
+    /* Allow italic text-fill to bleed slightly past box edge */
+    overflow: visible;
+    padding-bottom: 0.05em;
+}
+
+/* Sub-headline */
+.hero-sub {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: rgba(200, 185, 240, 0.7);
+    max-width: 580px;
+    margin: 0 auto;
+    margin-bottom: clamp(1.25rem, 2.5dvh, 2.5rem);
+    line-height: 1.65;
+}
+
+/* CTA group */
+.hero-cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: stretch;
+    margin-bottom: clamp(1rem, 2.5dvh, 2.5rem);
+    width: 100%;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 640px) {
+    .hero-cta-group {
+        flex-direction: row;
+        align-items: center;
+        max-width: none;
+    }
+}
+
+/* Primary CTA */
+.btn-primary-hero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    color: #fff;
+    background: linear-gradient(135deg, #6c2bee 0%, #9333ea 100%);
+    box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.3),
+                0 4px 24px rgba(108, 43, 238, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+.btn-primary-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+    border-radius: inherit;
+}
+.btn-primary-hero:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.5),
+                0 8px 40px rgba(108, 43, 238, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Secondary CTA */
+.btn-secondary-hero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+}
+.btn-secondary-hero:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(168, 85, 247, 0.4);
+}
+
+/* Credibility chip strip — lighter, more airy */
+.cred-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    justify-content: center;
+}
+.cred-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 13px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    font-size: 0.69rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.cred-chip .cred-val {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: rgba(168, 85, 247, 0.85);
+}
+
+/* SVG lines */
+.hero-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET — 640px+
+   Show far-edge icons only (left and right rails).
+   Content slightly larger.
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 640px) {
+    /* Show only the outermost left/right edge icons */
+    #si-sf,
+    #si-apex,
+    #si-lwc,
+    #si-api,
+    #si-db,
+    #si-bolt {
+        display: block;
+    }
+
+    /* Top-arc icons: Figma (left:21%) and API (right:20%) cleared below nav */
+    #si-sf   { top: calc(var(--nav-h) + 20px); }
+    #si-fig  { top: calc(var(--nav-h) + 8px); }
+    #si-api  { top: calc(var(--nav-h) + 8px); }
+    #si-db   { top: calc(var(--nav-h) + 70px); }
+
+    .avail-badge { font-size: 0.78rem; padding: 6px 16px; }
+    .btn-primary-hero,
+    .btn-secondary-hero { padding: 14px 30px; font-size: 0.92rem; }
+    .cred-chip { font-size: 0.72rem; padding: 6px 14px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DESKTOP — 1024px+
+   Show all icons. Full experience.
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+    /* Show every icon */
+    .skill-icon { display: block; }
+
+    /* Top-arc: Figma at left:21%, API at right:20% — both well below nav */
+    #si-sf   { top: calc(var(--nav-h) + 18px); }
+    #si-fig  { top: calc(var(--nav-h) + 4px);  }
+    #si-api  { top: calc(var(--nav-h) + 4px);  }
+    #si-db   { top: calc(var(--nav-h) + 76px); }
+
+    /* Let flexbox centre the content block naturally.
+       Remove excess internal top padding — the section's own padding-top
+       already accounts for the fixed nav. Keep padding symmetric so the
+       text sits at the true visual centre of the viewport. */
+    .hero-content {
+        padding-top:    clamp(0.5rem, 1.5dvh, 1.5rem);
+        padding-bottom: clamp(0.5rem, 1.5dvh, 1.5rem);
+    }
+
+    /* Headline: comfortable reading size for a 1024–1279px laptop */
+    .hero-headline {
+        font-size: clamp(2.6rem, 3.8vw, 3.4rem);
+        margin-bottom: clamp(0.6rem, 1.2dvh, 1.2rem);
+    }
+
+    /* Slightly tighter element gaps so content block fits short viewports */
+    .avail-badge   { margin-bottom: clamp(0.6rem, 1.5dvh, 1.4rem); }
+    .hero-sub      { margin-bottom: clamp(1rem,   1.8dvh, 1.8rem); }
+    .hero-cta-group{ margin-bottom: clamp(0.8rem, 1.8dvh, 1.8rem); }
+
+    .btn-primary-hero,
+    .btn-secondary-hero { padding: 14px 32px; font-size: 0.95rem; }
+    .cred-chip { font-size: 0.69rem; padding: 5px 13px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   LARGE DESKTOP — 1280px+
+   Extra breathing room.
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 1280px) {
+    .hero-content {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    /* Large desktop — let headline scale up properly */
+    .hero-headline { font-size: clamp(3rem, 4vw, 4.4rem); }
+    .hero-sub { font-size: 1.1rem; }
+}
