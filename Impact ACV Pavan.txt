@@ -1,0 +1,104 @@
+Deep Dive: ACV, Uplifts, and Deal Cancellation Logic
+This document provides a comprehensive technical breakdown of how Annual Contract Value (ACV) and ACV Uplift fields behave across standard opportunities, amendments, and complex cancellation scenarios.
+
+1. How ACV and ACV Uplifts Populate on the Opportunity
+The population of ACV on the Opportunity is heavily driven by the CPQ quoting engine and synchronized via backend Queueable Apex classes.
+
+ACV Value Population (SR_MasterOppSyncQueueable.cls)
+When a Deal is synced, the SR_MasterOppSyncQueueable iterates through all Quote Lines and maps their calculated ACVs to the OpportunityLineItem (Opportunity Product).
+
+Formula/Logic: The class maps the fields directly from the CPQ quote line (SR_Year1ACV__c, SR_Year2ACV__c, etc.) onto the Opportunity Product.
+It then aggregates these values across all non-one-time products:
+apex
+
+year1Total = (clonedOppProd.SR_Year1ACV__c != null) ? year1Total + clonedOppProd.SR_Year1ACV__c : year1Total;
+These aggregated totals (year1Total, year2Total, etc.) are what ultimately reflect the active ACV on the Opportunity.
+Year 1-7 ACV Uplift Logic (SR_OpportunityLineItemTriggerHelper.cls)
+The yearly uplift fields (SR_ACV1_Uplift__c through SR_ACV7_Uplift__c) on the Opportunity are populated via a strict aggregation of the underlying Opportunity Products.
+
+Formula/Logic: The system runs a SUM() aggregate query across all OpportunityLineItem records attached to the Opportunity.
+apex
+
+List<AggregateResult> aggregateResults = [SELECT OpportunityId, 
+                                          SUM(SR_ACV1_Uplift__c) sumACV1,
+                                          SUM(SR_ACV2_Uplift__c) sumACV2,
+                                          ... 
+                                          FROM OpportunityLineItem];
+The trigger helper takes these aggregated sums and applies multi-currency conversion calculations if the Opportunity's currency differs from the base currency:
+apex
+
+opp.SR_ACV1_Uplift__c = (acvMap.get('ACV1') * currencyConvRate).setScale(2, RoundingMode.HALF_UP);
+Opportunity Product (Line Item) Formulas: The underlying uplift fields on the OpportunityLineItem (e.g., SR_ACV1_Uplift__c) are actually native Salesforce Formula Fields. They are not populated by Apex, but evaluate in real-time.
+The Formula (Updated in Bug 9120064):
+
+IF(NOT(ISBLANK(SR_Year1_AdjustedPriceACV__c)), 
+   SR_Year1_AdjustedPriceACV__c - SR_LocationSpecific_From_Price__c, 
+   null)
+The Logic Explained: The formula takes the newly calculated or CPQ-synced Adjusted Price for that specific year (SR_Year1_AdjustedPriceACV__c) and simply subtracts the baseline/original price (SR_LocationSpecific_From_Price__c).
+How this handles Amendments: This is why the queueable classes carefully manage the SR_LocationSpecific_From_Price__c field. If that baseline price is accurately set on Amendment-Replace lines, the formula naturally calculates the exact net-new uplift. And during a Full Cancel, because the queueable intentionally nullifies SR_LocationSpecific_From_Price__c on the Amendment-Cancel lines, the formula safely drops the baseline out of the equation.
+Deep Dive Lineage: Tracing the Formula Inputs to their Source
+To fully understand the SR_ACV1_Uplift__c formula, we must trace exactly where its inputs (SR_Year1_AdjustedPriceACV__c and SR_LocationSpecific_From_Price__c) originate.
+
+1. Where does SR_Year1_AdjustedPriceACV__c come from?
+This field on the OpportunityLineItem is also a native Salesforce formula field (created under US 8136526).
+
+The Formula: SR_Year1ACV__c + SR_Year1_ForecastAdjustment__c
+Where do its components originate?
+SR_Year1ACV__c: This is the pure ACV calculated for the product.
+Lineage: It originates on the Deal Location Line (SR_DealLocationLine__c). The custom pricing engine (SR_PricingEngine.cls / SR_DealLocationLineRenewalBatch.cls) calculates this base ACV (e.g., From_Price + (From_Price * upliftPercent)). CPQ then twins this value onto the SBQQ__QuoteLine__c. Finally, during the Deal Sync, SR_MasterOppSyncQueueable.cls maps it directly from the Quote Line onto the Opportunity Product.
+SR_Year1_ForecastAdjustment__c: This is a dynamic financial adjustment applied to the line.
+Lineage: You are correct—users do not input the monetary value for this field. The monetary value is sourced directly from the SR_Year1ACV__c field.
+How it triggers: When the Opportunity enters a specific state (e.g., "Delayed Renewal", "Suspended", or "Cancelled" flag is set by the system/user), the SR_MasterOppSyncQueueable.cls calls SR_OpportunityItemDelayedRenewalBatch.populateOLIForecastAdjustmentFields(). This method pulls the SR_Year1ACV__c amount and calculates the adjustment (for instance, by setting the adjustment to -1 * SR_Year1ACV__c to zero out the forecast, or by prorating that ACV based on the Close Date). It then stamps this calculated value onto the Opportunity Product.
+2. Where does SR_LocationSpecific_From_Price__c come from?
+This field represents the "baseline" or original price of the contract before any new uplifts or replacements were applied. It is stamped onto the OpportunityLineItem via an Apex Trigger.
+
+The Assignment Logic: When the Opportunity Product is created or updated, the SR_OpportunityLineItemTriggerHelper.cls intercepts the record.
+apex
+
+// From SR_OpportunityLineItemTriggerHelper.cls
+oppLineItem.SR_LocationSpecific_From_Price__c = quoteLineMap.get(oppLineItem.SBQQ__QuoteLine__c).SR_Deal_Location_Line__r.SR_LocationSpecific_From_Price__c;
+The Origin (SR_DealLocationLine__c): The trigger pulls this value through the Quote Line directly from the parent Deal Location Line.
+Lineage: When a user initiates an Amendment or Renewal, the custom Deal orchestrator generates the new Deal Location Lines. It looks at the original, active contract line being amended/renewed and copies its final ACV into the SR_LocationSpecific_From_Price__c field on the new DLL to act as the baseline.
+2. ACV Updates During Amendment Opportunities (Amend-Cancel / Amend-Replace)
+When a customer amends an active contract, the CPQ engine and SR_AmendDealCreator.cls generate pairs of lines to balance the financial offset.
+
+Amendment-Cancel Lines (Negative ACV): These lines represent the portion of the contract being removed. The CPQ engine calculates a negative ACV based on the remaining prorated term of the cancelled product. During the Child Sync, these negative values are mapped to the Opportunity, which reduces the overall Opportunity ACV.
+Amendment-Replace Lines (Positive ACV): These lines represent the new products or new pricing replacing the old ones. The CPQ engine generates standard positive ACV values for these lines.
+The Net Effect: The Opportunity's total ACV becomes the sum of the negative Amendment-Cancel lines and the positive Amendment-Replace lines. This ensures the Pipeline only reflects the delta (the net new revenue or net loss) of the amendment, rather than double-counting the entire contract value.
+
+3. Full Cancellation of an Amend-Replace Deal
+A "Full Cancel Deal" orchestration (SR_FullCancellationOnDealHelper.cls) is triggered when an entire amendment needs to be backed out. This requires surgical precision to ensure false ACV isn't left in the pipeline.
+
+What Happens to Amendment-Replace (Positive Lines)?
+Hard Deletion (Bug 7168891 / US 8152722): The orchestration identifies all positive Amendment-Replace Deal Location Lines. It gathers their associated CPQ Quote Lines and sends them to a queueable job (SR_DeleteQuoteLinesOnCancelledDLLAsync).
+ACV Wipeout: This job executes a hard DELETE DML operation on both the CPQ Quote Lines and the synced OpportunityLineItem records.
+Result: Because the physical products are deleted, the positive ACV on the Amendment-Replace child Opportunity drops exactly to $0.
+What Happens to Amendment-Cancel (Negative Lines)?
+Preserving the Negative Offset (US 10942988): The negative cancel lines are not deleted, as they are required to legitimately cancel the original contract.
+Nullifying Base Prices: During the sync queueable (SR_MasterOppSyncQueueable), the system explicitly intercepts the Amendment-Cancel lines and nullifies SR_LocationSpecific_From_Price__c and SR_AmendedFromOpp_FromPrice__c. This ensures the negative ACV is calculated strictly based on the cancellation, without carrying over erroneous baseline prices from Year 2 onwards.
+4. Full Cancellation of a Renewal Deal
+When a Renewal deal is subjected to a Full Cancel orchestration, the system relies on a targeted fix implemented under US 10942988.
+
+The Logic (SR_FullCancellationOnDealHelper.cls)
+When iterating through the Deal Location Lines, the code specifically checks if the Transaction Type is a Renewal (SR_CONSTANTS.TRANSACTION_TYPE_RENEWAL).
+
+If the Renewal has a non-zero TCV (SR_Calculated_TCV__c != 0): The system treats it exactly like an amendment. It gathers the Quote Lines and adds them to the deletion queue (deleteQLSet). The Quote Lines and associated Opportunity Products are hard-deleted, forcing the Renewal Opportunity's ACV to $0.
+If the Renewal already has a $0 TCV: The system intentionally skips the deletion process. It leaves the $0 Quote Lines in the system because they pose no risk of inflating the pipeline.
+The Final Stage Sync
+Regardless of whether the lines were deleted or bypassed, the overarching Renewal Deal is ultimately flagged as Cancelled. The SR_DealTriggerHelper catches this status change and safely forces the Renewal Opportunity Stage to Closed Lost.
+
+NOTE
+
+Account ACV Impact: Because the Renewal Opportunity is now Closed Lost, the nightly AccountACVCalculations batch will reject it entirely, ensuring the Account's total ACV is not inflated by the dead renewal.
+
+5. Opportunity ACV & Uplift Values Upon Deal Cancellation
+When a Deal is fully cancelled, it is critical that the underlying Opportunity's financial footprint (ACVs and Uplifts) evaluates to $0.00 so that pipeline reports remain accurate.
+
+The Downstream Deletion Logic
+Orchestrator Execution: When the Deal is cancelled, the custom orchestrators (SR_FullCancellationOnDealHelper, SR_CancelDLLsOnFullCancelDealQueueable, etc.) physically delete the CPQ Quote Lines (SBQQ__QuoteLine__c) associated with the cancelled Deal Location Lines.
+Native CPQ Sync (The Trigger): Because Salesforce CPQ enforces a strict twin relationship between Quote Lines and Opportunity Products, deleting a Quote Line causes CPQ to execute a hard delete on the corresponding OpportunityLineItem record.
+The Trigger Helper (SR_OpportunityLineItemTriggerHelper.cls):
+The deletion of the OpportunityLineItem records fires the fter delete context in the Opportunity Product trigger.
+The helper immediately runs a SUM() aggregate query to recalculate all Uplifts across the remaining products on that Opportunity: pex List<AggregateResult> aggregateResults = [SELECT OpportunityId,                                            SUM(SR_ACV1_Uplift__c) sumACV1,                                           SUM(SR_ACV2_Uplift__c) sumACV2,                                           ...                                            FROM OpportunityLineItem]; 
+The Final Result: Because the cancelled products were deleted, the SUM() for all ACV Uplift fields evaluates to �. The trigger explicitly takes this � and stamps it directly onto the Opportunity's SR_ACV1_Uplift__c (through Year 7) fields.
+By relying on standard CPQ deletion syncing coupled with the custom SUM() aggregation in the Opportunity Line Item Trigger, the system guarantees that all financial uplift fields on the Opportunity roll down to exactly $0.00 upon Deal cancellation.

@@ -1,0 +1,71 @@
+Demo Script: Types of Deal (Technical Walkthrough)
+
+Speaker: Hi Team. Today we are going to cover the Types of Deals. As you know, we have five main types of deals: New, Amend, Renew, Trial, and Complimentary.
+
+A. New Sale Deals (Transaction Type: 'New')
+Used when selling products or services to new or existing customers. It represents net-new business with a customer and creates a net-new contract. It establishes the baseline Deal Contracts that will be referenced for the entire lifecycle of the customer.
+
+The contract creation process for a New Sale Deal is: Create Master Opp -> Create Deal -> Configure DL and DLLs -> Calculate & Consolidate Sync -> Child Sync Opportunities -> Submit for OM and get it approved to start Ordering and contracts get created.
+
+🔧 Technical Details for CRM Support (New Sale Process):
+
+Calculate & Consolidate Sync: When a user initiates this, the system fires SR_ConsolidatedMassSyncQueueable. This class is responsible for rolling up pricing from the Deal Location Lines (DLLs) and generating the unified CPQ Quote Lines. It ensures the total Deal value perfectly matches the Quote.
+Child Sync Opportunities: Handled primarily by SR_ChildOpportunitySyncQueueable. Because CPQ has limits on quote line volume, this queueable splits massive deals into smaller "Child" opportunities under the Master Opp to ensure quoting and contracting don't hit governor limits.
+OM Approved / Order Activation: Once OM approves the deal, the SR_OrderHandler takes over. It validates the deal structure and spins up the baseline SR_DealContract__c and Orders for billing.
+B. Amend Deals
+When a customer wants to change an active contract (e.g., add products, swap products, or change pricing/locations), we create an Amend Deal by clicking on the Amend Deal button.
+
+🔧 Technical Details for CRM Support (Amend Process):
+
+Action Initiation: The user clicks the Amend Deal quick action.
+Deal & Line Cloning (SR_AmendDealCreator): This class is the heart of the amendment process, responsible for cloning the header records and Deal Location Lines. Crucially, the system logic flips the SR_Transaction_Type__c of the new cloned lines to 'Amendment-Replace' or 'Amendment-Cancel'.
+Contract Sync (SR_AmendContractBatch): This is a critical CPQ integration batch job. It passes the original Contract to the CPQ Amend API to generate an Amendment Quote. It then creates the necessary negative offset lines for the cancelled portions (via createAmendmentCancelQuoteLines()) and aligns the newly amended lines back to the CPQ Quotes so that the pricing engine calculates the correct prorated contract values.
+C. Renew Deals
+When a user wants to extend an existing, active contract for another term, Renewal Deals can be created manually via a "Renew Deal" button or automatically based on the Auto Renew field value.
+
+🔧 Technical Details for CRM Support (Renew Process):
+
+Manual Renewals (SR_RenewDealController): When a rep manually clicks 'Renew Deal', this Apex controller handles the immediate cloning of the active contract, stamping the new Deal with SR_Transaction_Type__c = 'Renewal'.
+Automated Renewals (SR_DealAutoRenewalBatch): This is a continuous batch process that reschedules itself every 4 to 7 minutes (configured via custom labels SR_DealAutoRenewalBatch_Touchless and Requires_Review). It looks for deals 90 days from expiration where SR_AutoRenewalType__c is 'Touchless' or 'Requires Review' and automatically spawns the Renewal deal.
+Forecasting (SR_DealRenewalForecastEventHandler): As renewal deals are created, this handler ensures the Master Opportunity reflects the projected revenue for the upcoming year so sales leadership can forecast accurately.
+D. Trial Deals
+Used for short-term, unpaid access to products. Trial-New won't create an invoice to charge customers.
+
+🔧 Technical Details for CRM Support (Trial Process):
+
+Validation Bypassing (SR_CONSTANTS & SR_DealLocationLineTriggerHelper):
+System Proof: In SR_CONSTANTS.cls, all trial and complimentary types are grouped into TRANSACTION_TYPE_TRIAL_OR_COMP_LIST.
+System Proof: In SR_DealLocationLineTriggerHelper.cls (specifically lines 1486, 1637, 1700, and 1709), there are explicit if statements checking this exact list. If the deal is a Trial, the trigger intentionally bypasses strict financial validations (like requiring milestone dates or forcing revenue allocation validations).
+Trial-Conversion: When a Trial converts to a paid deal, the Transaction Type shifts out of that bypass list. This signals components like SR_DealTriggerHelper.cls (line 1628) and SR_OrderHandler to kick off standard pricing, generate a formal CPQ Quote, and run through standard Order activation since it's no longer shielded by the bypass list.
+E. Complimentary Deals
+Used for engagements where we are providing services at no cost to the customer. A CPQ Price Rule (an active data record in Salesforce CPQ, typically named something similar to "Set Complimentary Deals to Zero") is triggered for these deals, which automatically sets the price to $0.00 for all Quote Lines.
+
+🔧 Technical Details for CRM Support (Complimentary Process):
+
+Order Validation Bypass (SR_OrderHandler):
+System Proof: Similar to Trials, SR_OrderHandler.cls checks if the deal belongs to SR_CONSTANTS.TRANSACTION_TYPE_COMPLIMENTARY_LIST. If it does, it allows the $0 quotes to pass through the Order Activation process without throwing minimum-spend or zero-dollar errors that would normally block a standard commercial deal.
+CPQ Margin Exceptions (SR_AmendContractBatch):
+System Proof: In SR_AmendContractBatch.cls, the methods createAmendmentCancelQuote (line 213) and createAmendmentCancelQuoteLines (line 403) explicitly check for TRANSACTION_TYPE_COMPLIMENTARY_NEW and COMPLIMENTARY_RENEWAL. If found, they manually override the resulting cancellation transaction type to Complimentary Amendment - Cancel. This ensures CPQ downstream doesn't flag the deal for having a 0% margin during an amendment.
+F. Opportunity Stage Lifecycle (Closed Won / Closed Lost)
+Understanding how and when an Opportunity closes is critical for troubleshooting syncing issues. Opportunities are typically closed by automated processes, but have strict validation guardrails if users try to close them manually.
+
+🔧 Technical Details for CRM Support (Stage Transitions):
+
+Automated Deal Sync (SR_DealTriggerHelper.cls): When the Primary Deal changes status to 'Booked', the Opportunity automatically syncs to 'Closed Won'. If the Deal is 'Cancelled', the Opportunity syncs to 'Closed Lost'. This core sync behavior applies uniformly across New, Amendments, and Renewal scenarios—whenever their respective Primary Deal hits 'Booked', the associated Opportunity safely closes.
+Manual Closure Guardrails:
+The "Booked" Guardrail (SR_OpportunityTriggerHelper): If a user manually tries to close a CPQ Master Opportunity to 'Closed Won', the helper checks if a 'Booked' deal exists. If not, it blocks the save and throws the SR_CPQ_Master_Opportunity_Closed_Won_Validation error.
+The "Cancelled" Guardrail (SR_OpportunityTriggerHelper): If a Renewal Opportunity is moved to 'Closed Lost', there must be at least one Primary Deal with a status of 'Cancelled'. Otherwise, it throws the SR_RenewalOppClosedLost_Validation error.
+Forecast Cancelled Validation: A user cannot check the 'Forecast Cancelled' box if the Opportunity is being moved to 'Closed Won' or 'Closed Lost'.
+G. Impact of Closed Lost on ACV & Pipeline
+🔧 Technical Details for CRM Support (Pipeline Uplift Risk):
+
+Pipeline ACV Uplift Continues (BatchUpdatePipelineACVUplift.cls): Watch out for this! The batch job that calculates multi-year uplifts on the Opportunity level (Pipeline_ACV_Uplift__c) does not filter out Closed Lost records in its SOQL query. It will continue evaluating the dead Opportunity and rotating its uplift value year-over-year.
+Takeaway: The ACV fields on the Opportunity itself do not get zeroed out by a trigger when lost. Because the uplift batch keeps running, reporting teams must always add a StageName != 'Closed Lost' filter to any Pipeline Uplift dashboards to avoid inflated numbers.
+H. Deep Dive: Child Sync on a Cancelled Amendment
+When an Amendment Deal is cancelled (SR_Cancelled__c = true), the system must safely back out the financial values during the Child Opportunity Sync (SR_MasterOppSyncQueueable.cls). Amendments typically generate two types of lines: Amendment-Cancel (the negative offset) and Amendment-Replace (the new positive value).
+
+🔧 Technical Details for CRM Support (Cancellation Sync):
+
+Amendment-Cancel Lines: If the Deal is cancelled, the sync class explicitly intercepts lines where SR_Transaction_Type__c == 'Amendment-Cancel'. It forcefully nullifies the baseline values (SR_LocationSpecific_From_Price__c = null and SR_AmendedFromOpp_FromPrice__c = null) so that the full cancellation doesn't carry over erroneous baseline prices from Year 2 onwards.
+Amendment-Replace Lines: The sync logic deliberately bypasses the Amendment-Replace lines during a cancellation. The ACV fields on the Amendment-Replace Opportunity Products are not nulled out by the sync class; they retain their initially generated values from CPQ. However, because the overarching Master Opportunity is automatically moved to Closed Lost (via SR_DealTriggerHelper), the Account ACV rollup batch naturally ignores these positive values anyway.
+Orchestration Halt: To prevent further downstream errors on a cancelled deal, a Platform Event (SR_MassSyncOrchUpdateForCancelledDeal__e) is fired to immediately kill the Master Opportunity's Order Management orchestration.
